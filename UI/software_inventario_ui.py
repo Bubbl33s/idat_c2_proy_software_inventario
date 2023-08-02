@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         self.frame_producto = QtWidgets.QFrame(self.centralwidget)
         self.frame_producto.setMinimumSize(QtCore.QSize(1280, 720))
         self.frame_producto.setMaximumSize(QtCore.QSize(1280, 16777215))
-        self.frame_producto.setStyleSheet("background-color: rgb(0, 0, 0);")
+        self.frame_producto.setStyleSheet("")
         self.frame_producto.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_producto.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_producto.setObjectName("frame_producto")
