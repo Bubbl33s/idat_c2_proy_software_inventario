@@ -74,9 +74,14 @@
         <rect>
          <x>40</x>
          <y>260</y>
-         <width>1221</width>
+         <width>1240</width>
          <height>361</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QHeaderView::section {
+    color: rgb(170, 0, 127)
+}</string>
        </property>
        <column>
         <property name="text">
@@ -110,7 +115,7 @@
        </column>
        <column>
         <property name="text">
-         <string>Fecha de ingreso</string>
+         <string>Ingreso</string>
         </property>
        </column>
        <column>

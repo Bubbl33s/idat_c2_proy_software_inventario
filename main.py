@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
+from PyQt5.QtWidgets import *
 
 from querys import crear_lista_producto, cerrar_conexion
 
@@ -10,7 +10,25 @@ class SoftwareInventario(QMainWindow):
         super().__init__()
         uic.loadUi('ui/software_inventario.ui', self)
         
+        self.set_table()
         self.mostrar_tabla()
+
+    # MÉTODO PARA SETTEAR LA TABLA DE PRODUCTOS
+    def set_table(self):
+        # CONFIGURAR EL ANCHO DE CADA COLUMNA
+        self.tblProducto.setColumnWidth(0, 60)
+        self.tblProducto.setColumnWidth(1, 350)
+        self.tblProducto.setColumnWidth(2, 80)
+        self.tblProducto.setColumnWidth(3, 80)
+        self.tblProducto.setColumnWidth(4, 40)
+        self.tblProducto.setColumnWidth(5, 60)
+        self.tblProducto.setColumnWidth(6, 100)
+        self.tblProducto.setColumnWidth(7, 150)
+        self.tblProducto.setColumnWidth(8, 150)
+        self.tblProducto.setColumnWidth(9, 110)
+        
+        # BLOQUEAR LA FUNCIÓN DE CAMBIAR EL ANCHO DE LAS COLUMNAS
+        self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def mostrar_tabla(self):
         lista_productos = crear_lista_producto()
@@ -46,12 +64,12 @@ class SoftwareInventario(QMainWindow):
         # Imprime los datos.
         print(id_producto, descripcion_producto, precio, estado_producto, stock_producto,
             peso_producto, fecha_de_ingreso, descripcion_subfamilia, descripcion_familia, descripcion_linea)
-        """      
-        
+"""      
+      
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     gui = SoftwareInventario()
     gui.show()
-    sys.exit(app.exec_())
     cerrar_conexion()
+    sys.exit(app.exec_())

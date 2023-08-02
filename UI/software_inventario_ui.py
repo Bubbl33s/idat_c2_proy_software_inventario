@@ -34,7 +34,10 @@ class Ui_MainWindow(object):
         self.frame_producto.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_producto.setObjectName("frame_producto")
         self.tblProducto = QtWidgets.QTableWidget(self.frame_producto)
-        self.tblProducto.setGeometry(QtCore.QRect(40, 260, 1221, 361))
+        self.tblProducto.setGeometry(QtCore.QRect(40, 260, 1240, 361))
+        self.tblProducto.setStyleSheet("QHeaderView::section {\n"
+"    color: rgb(170, 0, 127)\n"
+"}")
         self.tblProducto.setObjectName("tblProducto")
         self.tblProducto.setColumnCount(10)
         self.tblProducto.setRowCount(0)
@@ -80,7 +83,7 @@ class Ui_MainWindow(object):
         item = self.tblProducto.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "Peso"))
         item = self.tblProducto.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Fecha de ingreso"))
+        item.setText(_translate("MainWindow", "Ingreso"))
         item = self.tblProducto.horizontalHeaderItem(7)
         item.setText(_translate("MainWindow", "Subfamilia"))
         item = self.tblProducto.horizontalHeaderItem(8)
