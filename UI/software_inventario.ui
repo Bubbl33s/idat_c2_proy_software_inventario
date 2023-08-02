@@ -69,6 +69,66 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
+      <widget class="QTableWidget" name="tblProducto">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>260</y>
+         <width>1221</width>
+         <height>361</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>ID</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Descripción</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Precio</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Estado</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Stock</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Peso</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Fecha de ingreso</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Subfamilia</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Familia</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Línea</string>
+        </property>
+       </column>
+      </widget>
      </widget>
     </item>
    </layout>
