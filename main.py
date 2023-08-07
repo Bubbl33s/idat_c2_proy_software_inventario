@@ -1,8 +1,10 @@
 import sys
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 
-from querys import crear_lista_producto, cerrar_conexion
+import querys as qr
+# from querys import crear_lista_producto, cerrar_conexion
 
 
 class SoftwareInventario(QMainWindow):
@@ -31,7 +33,7 @@ class SoftwareInventario(QMainWindow):
         self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def mostrar_tabla(self):
-        lista_productos = crear_lista_producto()
+        lista_productos = qr.crear_lista_producto()
         
         for listas in lista_productos:
             row_position = self.tblProducto.rowCount()
@@ -47,6 +49,12 @@ class SoftwareInventario(QMainWindow):
             self.tblProducto.setItem(row_position, 7, QTableWidgetItem(str(listas[7])))
             self.tblProducto.setItem(row_position, 8, QTableWidgetItem(str(listas[8])))
             self.tblProducto.setItem(row_position, 9, QTableWidgetItem(str(listas[9])))
+            
+            # Bloquear edición de campos
+            for row in range(self.tblProducto.rowCount()):
+                for column in range(self.tblProducto.columnCount()):
+                    item = self.tblProducto.item(row, column)
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
 """
         # Convierte los campos Decimal y datetime.date a float y str, respectivamente.
@@ -65,11 +73,10 @@ class SoftwareInventario(QMainWindow):
         print(id_producto, descripcion_producto, precio, estado_producto, stock_producto,
             peso_producto, fecha_de_ingreso, descripcion_subfamilia, descripcion_familia, descripcion_linea)
 """      
-      
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     gui = SoftwareInventario()
     gui.show()
-    cerrar_conexion()
+    qr.cerrar_conexion()
     sys.exit(app.exec_())

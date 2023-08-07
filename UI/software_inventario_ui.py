@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\maste\OneDrive\Escritorio\STUFF\IDAT\Ciclo II\PROYECTO_FINAL\ui\software_inventario.ui'
+# Form implementation generated from reading ui file 'd:\STUFF\IDAT\Ciclo II\PROYECTO_FINAL\ui\software_inventario.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QtCore.QSize(1280, 720))
         MainWindow.setMaximumSize(QtCore.QSize(1280, 720))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("c:\\Users\\maste\\OneDrive\\Escritorio\\STUFF\\IDAT\\Ciclo II\\PROYECTO_FINAL\\ui\\../assets/python.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("d:\\STUFF\\IDAT\\Ciclo II\\PROYECTO_FINAL\\ui\\../assets/python.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -34,6 +34,7 @@ class Ui_MainWindow(object):
         self.frame_producto.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_producto.setObjectName("frame_producto")
         self.tblProducto = QtWidgets.QTableWidget(self.frame_producto)
+        self.tblProducto.setEnabled(True)
         self.tblProducto.setGeometry(QtCore.QRect(40, 260, 1240, 361))
         self.tblProducto.setStyleSheet("QHeaderView::section {\n"
 "    color: rgb(170, 0, 127)\n"

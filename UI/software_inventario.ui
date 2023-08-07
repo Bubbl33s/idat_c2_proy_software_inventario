@@ -70,6 +70,9 @@
        <enum>QFrame::Raised</enum>
       </property>
       <widget class="QTableWidget" name="tblProducto">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>40</x>
