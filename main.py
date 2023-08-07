@@ -16,7 +16,7 @@ class SoftwareInventario(QMainWindow):
         self.txtBuscarProducto.textChanged.connect(self.realizar_busqueda)
          
         self.set_table()
-        self.mostrar_tabla()
+        self.rellenar_tabla(self.lista_productos)
 
     # MÉTODO PARA SETTEAR LA TABLA DE PRODUCTOS
     def set_table(self):
@@ -35,8 +35,8 @@ class SoftwareInventario(QMainWindow):
         # BLOQUEAR LA FUNCIÓN DE CAMBIAR EL ANCHO DE LAS COLUMNAS
         self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def mostrar_tabla(self):
-        for listas in self.lista_productos:
+    def rellenar_tabla(self, lista_busqueda):
+        for listas in lista_busqueda:
             row_position = self.tblProducto.rowCount()
             self.tblProducto.insertRow(row_position)
             
@@ -66,27 +66,7 @@ class SoftwareInventario(QMainWindow):
         self.tblProducto.setRowCount(0)
         
         # Rellenar tabla
-        for listas in productos_filtrados:
-            row_position = self.tblProducto.rowCount()
-            self.tblProducto.insertRow(row_position)
-            
-            self.tblProducto.setItem(row_position, 0, QTableWidgetItem(str(listas[0])))
-            self.tblProducto.setItem(row_position, 1, QTableWidgetItem(str(listas[1])))
-            self.tblProducto.setItem(row_position, 2, QTableWidgetItem(str(round(listas[2], 2))))
-            self.tblProducto.setItem(row_position, 3, QTableWidgetItem(str(listas[3])))
-            self.tblProducto.setItem(row_position, 4, QTableWidgetItem(str(listas[4])))
-            self.tblProducto.setItem(row_position, 5, QTableWidgetItem(str(listas[5])))
-            self.tblProducto.setItem(row_position, 6, QTableWidgetItem(str(listas[6])))
-            self.tblProducto.setItem(row_position, 7, QTableWidgetItem(str(listas[7])))
-            self.tblProducto.setItem(row_position, 8, QTableWidgetItem(str(listas[8])))
-            self.tblProducto.setItem(row_position, 9, QTableWidgetItem(str(listas[9])))
-            
-            # Bloquear edición de campos
-            for row in range(self.tblProducto.rowCount()):
-                for column in range(self.tblProducto.columnCount()):
-                    item = self.tblProducto.item(row, column)
-                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
-        
+        self.rellenar_tabla(productos_filtrados)
 
     def buscar_producto(self, busqueda):
         productos_filtrados = [prod for prod in self.lista_productos if busqueda in prod[0].lower().replace(" ", "") or busqueda in prod[1].lower().replace(" ", "")]
