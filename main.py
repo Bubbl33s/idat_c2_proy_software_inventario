@@ -11,7 +11,10 @@ class SoftwareInventario(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui/software_inventario.ui', self)
-        
+       
+        self.lista_productos = qr.crear_lista_producto()
+        self.txtBuscarProducto.textChanged.connect(self.realizar_busqueda)
+         
         self.set_table()
         self.mostrar_tabla()
 
@@ -33,9 +36,7 @@ class SoftwareInventario(QMainWindow):
         self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def mostrar_tabla(self):
-        lista_productos = qr.crear_lista_producto()
-        
-        for listas in lista_productos:
+        for listas in self.lista_productos:
             row_position = self.tblProducto.rowCount()
             self.tblProducto.insertRow(row_position)
             
@@ -56,23 +57,42 @@ class SoftwareInventario(QMainWindow):
                     item = self.tblProducto.item(row, column)
                     item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
-"""
-        # Convierte los campos Decimal y datetime.date a float y str, respectivamente.
-        id_producto = row[0]
-        descripcion_producto = row[1]
-        precio = float(row[2])
-        estado_producto = row[3]
-        stock_producto = row[4]
-        peso_producto = float(row[5])
-        fecha_de_ingreso = str(row[6])
-        descripcion_subfamilia = row[7]
-        descripcion_familia = row[8]
-        descripcion_linea = row[9]
+    def realizar_busqueda(self):
+        busqueda = self.txtBuscarProducto.text().lower()
+        productos_filtrados = self.buscar_producto(busqueda)
         
-        # Imprime los datos.
-        print(id_producto, descripcion_producto, precio, estado_producto, stock_producto,
-            peso_producto, fecha_de_ingreso, descripcion_subfamilia, descripcion_familia, descripcion_linea)
-"""      
+        # Limpiar tabla
+        self.tblProducto.clear()
+        self.tblProducto.setRowCount(0)
+        
+        # Rellenar tabla
+        for listas in productos_filtrados:
+            row_position = self.tblProducto.rowCount()
+            self.tblProducto.insertRow(row_position)
+            
+            self.tblProducto.setItem(row_position, 0, QTableWidgetItem(str(listas[0])))
+            self.tblProducto.setItem(row_position, 1, QTableWidgetItem(str(listas[1])))
+            self.tblProducto.setItem(row_position, 2, QTableWidgetItem(str(round(listas[2], 2))))
+            self.tblProducto.setItem(row_position, 3, QTableWidgetItem(str(listas[3])))
+            self.tblProducto.setItem(row_position, 4, QTableWidgetItem(str(listas[4])))
+            self.tblProducto.setItem(row_position, 5, QTableWidgetItem(str(listas[5])))
+            self.tblProducto.setItem(row_position, 6, QTableWidgetItem(str(listas[6])))
+            self.tblProducto.setItem(row_position, 7, QTableWidgetItem(str(listas[7])))
+            self.tblProducto.setItem(row_position, 8, QTableWidgetItem(str(listas[8])))
+            self.tblProducto.setItem(row_position, 9, QTableWidgetItem(str(listas[9])))
+            
+            # Bloquear edición de campos
+            for row in range(self.tblProducto.rowCount()):
+                for column in range(self.tblProducto.columnCount()):
+                    item = self.tblProducto.item(row, column)
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+        
+
+    def buscar_producto(self, busqueda):
+        productos_filtrados = [prod for prod in self.lista_productos if busqueda in prod[0].lower().replace(" ", "") or busqueda in prod[1].lower().replace(" ", "")]
+
+        return productos_filtrados
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

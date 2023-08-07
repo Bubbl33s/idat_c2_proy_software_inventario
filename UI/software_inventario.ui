@@ -137,6 +137,29 @@
         </property>
        </column>
       </widget>
+      <widget class="QLineEdit" name="txtBuscarProducto">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>150</y>
+         <width>231</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnBuscar">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>150</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Buscar</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
