@@ -13,13 +13,14 @@ class SoftwareInventario(QMainWindow):
         uic.loadUi('ui/software_inventario.ui', self)
        
         self.lista_productos = qr.crear_lista_producto()
-        self.txtBuscarProducto.textChanged.connect(self.realizar_busqueda)
+        self.txtBuscarProducto.textChanged.connect(self.realizar_busqueda_producto)
          
-        self.set_table()
-        self.rellenar_tabla(self.lista_productos)
+        self.set_table_producto()
+        self.rellenar_tabla_producto(self.lista_productos)
 
     # MÉTODO PARA SETTEAR LA TABLA DE PRODUCTOS
-    def set_table(self):
+    def set_table_producto(self):
+        self.tblProducto.verticalHeader().setDefaultSectionSize(37)
         # CONFIGURAR EL ANCHO DE CADA COLUMNA
         self.tblProducto.setColumnWidth(0, 60)
         self.tblProducto.setColumnWidth(1, 350)
@@ -31,11 +32,14 @@ class SoftwareInventario(QMainWindow):
         self.tblProducto.setColumnWidth(7, 150)
         self.tblProducto.setColumnWidth(8, 150)
         self.tblProducto.setColumnWidth(9, 110)
+    
+        # self.tblProducto.setRowDefayltHeight(37) ????
         
         # BLOQUEAR LA FUNCIÓN DE CAMBIAR EL ANCHO DE LAS COLUMNAS
         self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.tblProducto.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
-    def rellenar_tabla(self, lista_busqueda):
+    def rellenar_tabla_producto(self, lista_busqueda):
         for listas in lista_busqueda:
             row_position = self.tblProducto.rowCount()
             self.tblProducto.insertRow(row_position)
@@ -57,7 +61,7 @@ class SoftwareInventario(QMainWindow):
                     item = self.tblProducto.item(row, column)
                     item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
-    def realizar_busqueda(self):
+    def realizar_busqueda_producto(self):
         busqueda = self.txtBuscarProducto.text().lower()
         productos_filtrados = self.buscar_producto(busqueda)
         
@@ -66,7 +70,7 @@ class SoftwareInventario(QMainWindow):
         self.tblProducto.setRowCount(0)
         
         # Rellenar tabla
-        self.rellenar_tabla(productos_filtrados)
+        self.rellenar_tabla_producto(productos_filtrados)
 
     def buscar_producto(self, busqueda):
         productos_filtrados = [prod for prod in self.lista_productos if busqueda in prod[0].lower().replace(" ", "") or busqueda in prod[1].lower().replace(" ", "")]

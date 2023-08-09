@@ -62,12 +62,10 @@ class Ui_MainWindow(object):
         self.tblProducto.setHorizontalHeaderItem(8, item)
         item = QtWidgets.QTableWidgetItem()
         self.tblProducto.setHorizontalHeaderItem(9, item)
+        self.tblProducto.verticalHeader().setCascadingSectionResizes(False)
         self.txtBuscarProducto = QtWidgets.QLineEdit(self.frame_producto)
         self.txtBuscarProducto.setGeometry(QtCore.QRect(200, 150, 231, 41))
         self.txtBuscarProducto.setObjectName("txtBuscarProducto")
-        self.btnBuscar = QtWidgets.QPushButton(self.frame_producto)
-        self.btnBuscar.setGeometry(QtCore.QRect(580, 150, 93, 28))
-        self.btnBuscar.setObjectName("btnBuscar")
         self.verticalLayout.addWidget(self.frame_producto)
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -97,4 +95,3 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Familia"))
         item = self.tblProducto.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Línea"))
-        self.btnBuscar.setText(_translate("MainWindow", "Buscar"))
