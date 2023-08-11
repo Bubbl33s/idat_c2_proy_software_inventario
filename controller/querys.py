@@ -4,10 +4,10 @@ import pyodbc
 server = 'BUBBLES'
 database = 'Inventario'
 
-# Crea la cadena de conexión
+# Crea la string para la conexión
 connection_string = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_Connection=yes;"
 
-# Intenta conectarse
+# Intenta conectarse a la base de datos
 try:
     conn = pyodbc.connect(connection_string)
     print("Conexión exitosa a la base de datos.")
@@ -22,11 +22,13 @@ def get_users_dict():
     query_users = "SELECT ID_inventarista, Password from TB_INVENTARISTA"
     cursor.execute(query_users)
 
+    # Crea un diccionario con el usuario y contraseña de los inventaristas
     users_dict = {v.lower(): k for v, k in cursor.fetchall()}
 
     return users_dict
 
 
+# Crea una lista con la tabla de productos de la base de datos
 def get_product_list():
     query_producto = """
     SELECT
@@ -49,6 +51,7 @@ def get_product_list():
     cursor.execute(query_producto)
     productos = []
 
+    # Llena la lista vacía
     for row in cursor.fetchall():
         dato = [r for r in row]
 
