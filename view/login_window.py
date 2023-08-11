@@ -14,7 +14,21 @@ class LoginWindow(QtWidgets.QMainWindow):
         self.admins_dict = {'admx99': 'admx99', 'admz88': 'admz88'}
         self.users_dict = get_users_dict()
 
-        self.btn_login.clicked.connect(self.check_login)
+        self.btn_login.clicked.connect(self.verify_null_inputs)
+
+    def verify_null_inputs(self):
+        self.login_user = self.txt_user.text().lower()
+        self.login_password = self.txt_password.text().lower()
+
+        if self.login_user == "" or self.login_password == "":
+            # Ventana de advertencia
+            title = "Campos vacíos"
+            text = "Llene ambos campos"
+
+            setted_message_box(self, title, text)
+
+        else:
+            self.check_login()
 
     def switch_to_inv_window(self):
         self.window = IventaristaWindow()
@@ -22,9 +36,6 @@ class LoginWindow(QtWidgets.QMainWindow):
         self.close()
 
     def check_login(self):
-        self.login_user = self.txt_user.text().lower()
-        self.login_password = self.txt_password.text().lower()
-
         if self.admins_dict.get(self.login_user) == self.login_password:
             # TODO
             # CAMBIAR A VENTANA DE ADMIN
@@ -34,11 +45,19 @@ class LoginWindow(QtWidgets.QMainWindow):
             self.switch_to_inv_window()
 
         else:
-            # TODO
-            # VENTANAS DE ADVERTENCIA
-            title = "Datos incorrectos"
-            text = f"Intentos restantes: {3 - self.conteo}"
+            if self.conteo < 2:
+                self.conteo += 1
 
-            setted_message_box(self, title, text)
+                title = "Datos incorrectos"
+                text = f"Intentos restantes: {3 - self.conteo}"
 
-            self.conteo += 1
+                setted_message_box(self, title, text)
+
+            else:
+                title = "Intentos agotados"
+                text = f"Inicio de sesión fallido"
+
+                response, custom_button = setted_message_box(self, title, text)
+
+                if response == QtWidgets.QMessageBox.AcceptRole:
+                    self.close()
