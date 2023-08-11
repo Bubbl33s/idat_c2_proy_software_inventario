@@ -2,7 +2,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication
 
-from vista.login_window import LoginWindow
+from view.login_window import LoginWindow
 
 
 if __name__ == '__main__':

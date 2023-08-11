@@ -75,10 +75,10 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>260</y>
+         <x>20</x>
+         <y>180</y>
          <width>1240</width>
-         <height>361</height>
+         <height>481</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -143,8 +143,8 @@
       <widget class="QLineEdit" name="txtBuscarProducto">
        <property name="geometry">
         <rect>
-         <x>200</x>
-         <y>150</y>
+         <x>40</x>
+         <y>60</y>
          <width>231</width>
          <height>41</height>
         </rect>

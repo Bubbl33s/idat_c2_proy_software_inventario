@@ -1,0 +1,8 @@
+QMessageBox {
+    background-color: #111111;
+    font-family: "Century Gothic";
+}
+
+QMessageBox QLabel[text^="Intentos"] {
+    color: #FFFFFF;
+}

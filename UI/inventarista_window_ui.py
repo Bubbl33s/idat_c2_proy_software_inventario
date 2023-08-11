@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         self.frame_producto.setObjectName("frame_producto")
         self.tblProducto = QtWidgets.QTableWidget(self.frame_producto)
         self.tblProducto.setEnabled(True)
-        self.tblProducto.setGeometry(QtCore.QRect(40, 260, 1240, 361))
+        self.tblProducto.setGeometry(QtCore.QRect(20, 180, 1240, 481))
         self.tblProducto.setStyleSheet("QHeaderView::section {\n"
 "    color: rgb(170, 0, 127)\n"
 "}")
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.tblProducto.setHorizontalHeaderItem(9, item)
         self.tblProducto.verticalHeader().setCascadingSectionResizes(False)
         self.txtBuscarProducto = QtWidgets.QLineEdit(self.frame_producto)
-        self.txtBuscarProducto.setGeometry(QtCore.QRect(200, 150, 231, 41))
+        self.txtBuscarProducto.setGeometry(QtCore.QRect(40, 60, 231, 41))
         self.txtBuscarProducto.setObjectName("txtBuscarProducto")
         self.verticalLayout.addWidget(self.frame_producto)
         MainWindow.setCentralWidget(self.centralwidget)
