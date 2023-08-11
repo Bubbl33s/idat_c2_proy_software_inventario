@@ -57,7 +57,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgb(120, 120, 120);\n"
 "}\n"
-"")
+"\n"
+"QMessageBox{\n"
+"color: rgb(0, 0, 0);\n"
+"}")
         self.background = QtWidgets.QWidget(MainWindow)
         self.background.setObjectName("background")
         self.container = QtWidgets.QFrame(self.background)

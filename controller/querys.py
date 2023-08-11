@@ -17,11 +17,17 @@ except pyodbc.Error as error:
 # CURSOR
 cursor = conn.cursor()
 
-# MOSTRAR DATOS
-query_read = "SELECT ID_inventarista, Apellidos, Nombres FROM TB_INVENTARISTA"
+
+def get_users_dict():
+    query_users = "SELECT ID_inventarista, Password from TB_INVENTARISTA"
+    cursor.execute(query_users)
+
+    users_dict = {v.lower(): k for v, k in cursor.fetchall()}
+
+    return users_dict
 
 
-def crear_lista_producto():
+def get_product_list():
     query_producto = """
     SELECT
         P.ID_producto,
@@ -41,36 +47,20 @@ def crear_lista_producto():
     """
 
     cursor.execute(query_producto)
-    
     productos = []
 
     for row in cursor.fetchall():
         dato = [r for r in row]
-        
-        productos.append(dato)
-            
-        """
-        # Convierte los campos Decimal y datetime.date a float y str, respectivamente.
-        id_producto = row[0]
-        descripcion_producto = row[1]
-        precio = float(row[2])
-        estado_producto = row[3]
-        stock_producto = row[4]
-        peso_producto = float(row[5])
-        fecha_de_ingreso = str(row[6])
-        descripcion_subfamilia = row[7]
-        descripcion_familia = row[8]
-        descripcion_linea = row[9]
-        
-        # Imprime los datos.
-        print(id_producto, descripcion_producto, precio, estado_producto, stock_producto,
-            peso_producto, fecha_de_ingreso, descripcion_subfamilia, descripcion_familia, descripcion_linea)
-        """
 
-    #print(productos)
-    
+        productos.append(dato)
+
     return productos
+
 
 def cerrar_conexion():
     # CERRAR LA CONEXIÓN
     conn.close()
+
+
+if __name__ == "__main__":
+    print(get_users_dict())

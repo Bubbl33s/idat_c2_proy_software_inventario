@@ -57,7 +57,10 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: rgb(120, 120, 120);
 }
-</string>
+
+QMessageBox{
+color: rgb(0, 0, 0);
+}</string>
   </property>
   <widget class="QWidget" name="background">
    <widget class="QFrame" name="container">

@@ -3,7 +3,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 
-import querys as qr
+import controller.querys as qr
 # from querys import crear_lista_producto, cerrar_conexion
 
 
