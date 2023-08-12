@@ -14,31 +14,138 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1280, 720)
-        MainWindow.setMinimumSize(QtCore.QSize(1280, 720))
-        MainWindow.setMaximumSize(QtCore.QSize(1280, 720))
+        MainWindow.resize(1366, 768)
+        MainWindow.setMinimumSize(QtCore.QSize(1366, 768))
+        MainWindow.setMaximumSize(QtCore.QSize(1366, 768))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("d:\\STUFF\\IDAT\\Ciclo II\\PROYECTO_FINAL\\ui\\../assets/python.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        MainWindow.setStyleSheet("*{\n"
+"font-family: century-ghotic;\n"
+"}\n"
+"\n"
+"QWidget#background{\n"
+"background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(20, 20, 20), stop:1 rgb(80, 80, 80));\n"
+"}\n"
+"\n"
+"QFrame#frame_main{\n"
+"background-color: rgb(20, 20, 20);\n"
+"border-radius: 15px;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"color: rgb(230, 230, 230);\n"
+"}\n"
+"\n"
+"QLineEdit{\n"
+"background: transparent;\n"
+"border: none;\n"
+"border-bottom: 1px solid white;\n"
+"color: white;\n"
+"font-size: 14px;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"background-color: rgb(152, 152, 152);\n"
+"font-weight: bold;\n"
+"font-size: 20px;\n"
+"border:none;\n"
+"border-radius: 8px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(190, 190, 190);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QMessageBox{\n"
+"color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    font-weight: bold;\n"
+"    background-color: transparent;\n"
+"    color: rgb(230, 230, 230);\n"
+"}\n"
+"\n"
+"QTableWidget {\n"
+"    background-color: transparent;\n"
+"    color: rgb(230, 230, 230);\n"
+"}\n"
+"\n"
+"QTableWidget::item {\n"
+"    border-right: 8px solid rgb(20, 20, 20);\n"
+"    border-left: 8px solid rgb(20, 20, 20);\n"
+"}\n"
+"\n"
+"QTableWidget QHeaderView::section:vertical {\n"
+"    border-right: 15px solid rgb(20, 20, 20);\n"
+"}\n"
+"\n"
+"QTableWidget QHeaderView {\n"
+"    background-color: transparent;\n"
+"}\n"
+"\n"
+"QTableWidget QTableCornerButton::section {\n"
+"    background-color: transparent;\n"
+"}\n"
+"\n"
+"QTableWidget QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: rgb(152, 152, 152);\n"
+"    width: 15px;\n"
+"}\n"
+"\n"
+"QTableWidget QScrollBar::add-page:vertical, QTableWidget QScrollBar::sub-page:vertical {\n"
+"    background: rgb(152, 152, 152);\n"
+"}\n"
+"QTableWidget QScrollBar::handle:vertical {\n"
+"    background: rgb(44, 44, 44);\n"
+"    margin: 2px 2.5px;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical {\n"
+"    height: 0px;\n"
+"    border: none;\n"
+"    background: none;\n"
+"}")
+        self.background = QtWidgets.QWidget(MainWindow)
+        self.background.setStyleSheet("")
+        self.background.setObjectName("background")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.background)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.frame_producto = QtWidgets.QFrame(self.centralwidget)
-        self.frame_producto.setMinimumSize(QtCore.QSize(1280, 720))
-        self.frame_producto.setMaximumSize(QtCore.QSize(1280, 16777215))
+        self.frame_producto = QtWidgets.QFrame(self.background)
+        self.frame_producto.setMinimumSize(QtCore.QSize(1366, 768))
+        self.frame_producto.setMaximumSize(QtCore.QSize(1633, 768))
         self.frame_producto.setStyleSheet("")
         self.frame_producto.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_producto.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_producto.setObjectName("frame_producto")
-        self.tblProducto = QtWidgets.QTableWidget(self.frame_producto)
-        self.tblProducto.setEnabled(True)
-        self.tblProducto.setGeometry(QtCore.QRect(20, 180, 1240, 481))
-        self.tblProducto.setStyleSheet("QHeaderView::section {\n"
-"    color: rgb(170, 0, 127)\n"
+        self.frame_main = QtWidgets.QFrame(self.frame_producto)
+        self.frame_main.setGeometry(QtCore.QRect(20, 20, 1331, 731))
+        self.frame_main.setStyleSheet("QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical {\n"
+"    height: 0px;\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"}\n"
+"\n"
+"QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:vertical {\n"
+"    width: 0px;\n"
+"    height: 0px;\n"
+"    background: transparent;\n"
 "}")
+        self.frame_main.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_main.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_main.setObjectName("frame_main")
+        self.tblProducto = QtWidgets.QTableWidget(self.frame_main)
+        self.tblProducto.setEnabled(True)
+        self.tblProducto.setGeometry(QtCore.QRect(30, 230, 1275, 481))
+        self.tblProducto.setStyleSheet("")
         self.tblProducto.setObjectName("tblProducto")
         self.tblProducto.setColumnCount(10)
         self.tblProducto.setRowCount(0)
@@ -63,11 +170,16 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tblProducto.setHorizontalHeaderItem(9, item)
         self.tblProducto.verticalHeader().setCascadingSectionResizes(False)
-        self.txtBuscarProducto = QtWidgets.QLineEdit(self.frame_producto)
-        self.txtBuscarProducto.setGeometry(QtCore.QRect(40, 60, 231, 41))
+        self.txtBuscarProducto = QtWidgets.QLineEdit(self.frame_main)
+        self.txtBuscarProducto.setGeometry(QtCore.QRect(80, 140, 231, 41))
         self.txtBuscarProducto.setObjectName("txtBuscarProducto")
+        self.frame_details = QtWidgets.QFrame(self.frame_producto)
+        self.frame_details.setGeometry(QtCore.QRect(460, 70, 120, 80))
+        self.frame_details.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_details.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_details.setObjectName("frame_details")
         self.verticalLayout.addWidget(self.frame_producto)
-        MainWindow.setCentralWidget(self.centralwidget)
+        MainWindow.setCentralWidget(self.background)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

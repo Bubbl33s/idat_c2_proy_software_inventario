@@ -29,7 +29,7 @@ def get_users_dict():
 
 
 # Crea una lista con la tabla de productos de la base de datos
-def get_product_list():
+def get_products_list():
     query_producto = """
     SELECT
         P.ID_producto,
@@ -60,7 +60,7 @@ def get_product_list():
     return productos
 
 
-def cerrar_conexion():
+def close_connection():
     # CERRAR LA CONEXIÓN
     conn.close()
 

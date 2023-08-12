@@ -3,8 +3,8 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 
-import controller.querys as qr
-# from querys import crear_lista_producto, cerrar_conexion
+from controller.querys import get_products_list, close_connection
+from view.items_margin import TableItemDelegate
 
 
 class SoftwareInventario(QMainWindow):
@@ -12,87 +12,101 @@ class SoftwareInventario(QMainWindow):
         super().__init__()
         uic.loadUi('ui/inventarista_window.ui', self)
 
-        self.lista_productos = qr.crear_lista_producto()
+        self.products_list = get_products_list()
         self.txtBuscarProducto.textChanged.connect(
-            self.realizar_busqueda_producto)
+            self.search_product)
 
-        self.set_table_producto()
-        self.rellenar_tabla_producto(self.lista_productos)
+        self.set_product_table()
+        self.fill_product_table(self.products_list)
 
     # MÉTODO PARA SETTEAR LA TABLA DE PRODUCTOS
-    def set_table_producto(self):
-        self.tblProducto.verticalHeader().setDefaultSectionSize(37)
+    def set_product_table(self):
         # CONFIGURAR EL ANCHO DE CADA COLUMNA
-        self.tblProducto.setColumnWidth(0, 60)
-        self.tblProducto.setColumnWidth(1, 350)
+        self.tblProducto.setColumnWidth(0, 77)
+        self.tblProducto.setColumnWidth(1, 360)
         self.tblProducto.setColumnWidth(2, 80)
         self.tblProducto.setColumnWidth(3, 80)
         self.tblProducto.setColumnWidth(4, 40)
         self.tblProducto.setColumnWidth(5, 60)
         self.tblProducto.setColumnWidth(6, 100)
         self.tblProducto.setColumnWidth(7, 150)
-        self.tblProducto.setColumnWidth(8, 150)
+        self.tblProducto.setColumnWidth(8, 160)
         self.tblProducto.setColumnWidth(9, 110)
 
-        # self.tblProducto.setRowDefayltHeight(37) ????
+        # Configurar headers
+        self.tblProducto.verticalHeader().setFixedWidth(32)
+        self.tblProducto.verticalHeader().setDefaultAlignment(
+            Qt.AlignRight | Qt.AlignVCenter)
 
-        # BLOQUEAR LA FUNCIÓN DE CAMBIAR EL ANCHO DE LAS COLUMNAS
+        self.tblProducto.horizontalHeader().setFixedHeight(40)
         self.tblProducto.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
         self.tblProducto.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
-    def rellenar_tabla_producto(self, lista_busqueda):
-        for listas in lista_busqueda:
+    def fill_product_table(self, single_lists_to_search):
+        for single_list in single_lists_to_search:
             row_position = self.tblProducto.rowCount()
             self.tblProducto.insertRow(row_position)
 
             self.tblProducto.setItem(
-                row_position, 0, QTableWidgetItem(str(listas[0])))
+                row_position, 0, QTableWidgetItem(str(single_list[0])))
             self.tblProducto.setItem(
-                row_position, 1, QTableWidgetItem(str(listas[1])))
+                row_position, 1, QTableWidgetItem(str(single_list[1])))
             self.tblProducto.setItem(
-                row_position, 2, QTableWidgetItem(str(round(listas[2], 2))))
+                row_position, 2, QTableWidgetItem(str(round(single_list[2], 2))))
             self.tblProducto.setItem(
-                row_position, 3, QTableWidgetItem(str(listas[3])))
+                row_position, 3, QTableWidgetItem(str(single_list[3])))
             self.tblProducto.setItem(
-                row_position, 4, QTableWidgetItem(str(listas[4])))
+                row_position, 4, QTableWidgetItem(str(single_list[4])))
             self.tblProducto.setItem(
-                row_position, 5, QTableWidgetItem(str(listas[5])))
+                row_position, 5, QTableWidgetItem(str(single_list[5])))
             self.tblProducto.setItem(
-                row_position, 6, QTableWidgetItem(str(listas[6])))
+                row_position, 6, QTableWidgetItem(str(single_list[6])))
             self.tblProducto.setItem(
-                row_position, 7, QTableWidgetItem(str(listas[7])))
+                row_position, 7, QTableWidgetItem(str(single_list[7])))
             self.tblProducto.setItem(
-                row_position, 8, QTableWidgetItem(str(listas[8])))
+                row_position, 8, QTableWidgetItem(str(single_list[8])))
             self.tblProducto.setItem(
-                row_position, 9, QTableWidgetItem(str(listas[9])))
+                row_position, 9, QTableWidgetItem(str(single_list[9])))
 
-            # Bloquear edición de campos
-            for row in range(self.tblProducto.rowCount()):
-                for column in range(self.tblProducto.columnCount()):
-                    item = self.tblProducto.item(row, column)
-                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+            self.fix_cells()
 
-    def realizar_busqueda_producto(self):
-        busqueda = self.txtBuscarProducto.text().lower()
-        productos_filtrados = self.buscar_producto(busqueda)
+    def fix_cells(self):
+        # Bloquear edición de campos
+        for row in range(self.tblProducto.rowCount()):
+            for column in range(self.tblProducto.columnCount()):
+                item = self.tblProducto.item(row, column)
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+
+        # Alineación columna 3
+        index_nums_align = [2, 4, 5]
+
+        for i in index_nums_align:
+            for row_index in range(self.tblProducto.rowCount()):
+                item = self.tblProducto.item(row_index, i)
+                item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+    def search_product(self):
+        search = self.txtBuscarProducto.text().lower()
+        filtered_products = self.search_list_products(search)
 
         # Limpiar tabla
-        self.tblProducto.clear()
-        self.tblProducto.setRowCount(0)
+        while self.tblProducto.rowCount() > 0:
+            self.tblProducto.removeRow(0)
 
         # Rellenar tabla
-        self.rellenar_tabla_producto(productos_filtrados)
+        self.fill_product_table(filtered_products)
 
-    def buscar_producto(self, busqueda):
-        productos_filtrados = [prod for prod in self.lista_productos if busqueda in prod[0].lower(
-        ).replace(" ", "") or busqueda in prod[1].lower().replace(" ", "")]
+    def search_list_products(self, search):
+        filtered_products = [prod for prod in self.products_list if search in prod[0].lower()
+                             .replace(" ", "") or search in prod[1].lower().replace(" ", "")]
 
-        return productos_filtrados
+        return filtered_products
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     gui = SoftwareInventario()
     gui.show()
-    qr.cerrar_conexion()
+    close_connection()
     sys.exit(app.exec_())

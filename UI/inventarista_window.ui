@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>1366</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1280</width>
-    <height>720</height>
+    <width>1366</width>
+    <height>768</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1280</width>
-    <height>720</height>
+    <width>1366</width>
+    <height>768</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,104 @@
    <iconset>
     <normaloff>../assets/python.png</normaloff>../assets/python.png</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <property name="styleSheet">
+   <string notr="true">*{
+font-family: century-ghotic;
+}
+
+QWidget#background{
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(20, 20, 20), stop:1 rgb(80, 80, 80));
+}
+
+QFrame#frame_main{
+background-color: rgb(20, 20, 20);
+border-radius: 15px;
+}
+
+QLabel{
+color: rgb(230, 230, 230);
+}
+
+QLineEdit{
+background: transparent;
+border: none;
+border-bottom: 1px solid white;
+color: white;
+font-size: 14px;
+}
+
+QPushButton{
+background-color: rgb(152, 152, 152);
+font-weight: bold;
+font-size: 20px;
+border:none;
+border-radius: 8px;
+}
+QPushButton:hover {
+    background-color: rgb(190, 190, 190);
+}
+
+QPushButton:pressed {
+    background-color: rgb(120, 120, 120);
+}
+
+QMessageBox{
+color: rgb(0, 0, 0);
+}
+
+QHeaderView::section {
+    font-weight: bold;
+    background-color: transparent;
+	color: rgb(230, 230, 230);
+}
+
+QTableWidget {
+    background-color: transparent;
+	color: rgb(230, 230, 230);
+}
+
+QTableWidget::item {
+    border-right: 8px solid rgb(20, 20, 20);
+	border-left: 8px solid rgb(20, 20, 20);
+}
+
+QTableWidget QHeaderView::section:vertical {
+    border-right: 15px solid rgb(20, 20, 20);
+}
+
+QTableWidget QHeaderView {
+    background-color: transparent;
+}
+
+QTableWidget QTableCornerButton::section {
+    background-color: transparent;
+}
+
+QTableWidget QScrollBar:vertical {
+    border: none;
+    background: rgb(152, 152, 152);
+	width: 15px;
+}
+
+QTableWidget QScrollBar::add-page:vertical, QTableWidget QScrollBar::sub-page:vertical {
+    background: rgb(152, 152, 152);
+}
+QTableWidget QScrollBar::handle:vertical {
+    background: rgb(44, 44, 44);
+	margin: 2px 2.5px;
+	border-radius: 4px;
+}
+
+QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical {
+    height: 0px;
+    border: none;
+    background: none;
+}</string>
+  </property>
+  <widget class="QWidget" name="background">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -50,14 +147,14 @@
      <widget class="QFrame" name="frame_producto">
       <property name="minimumSize">
        <size>
-        <width>1280</width>
-        <height>720</height>
+        <width>1366</width>
+        <height>768</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>1280</width>
-        <height>16777215</height>
+        <width>1633</width>
+        <height>768</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -69,85 +166,128 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tblProducto">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QFrame" name="frame_main">
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>180</y>
-         <width>1240</width>
-         <height>481</height>
+         <y>20</y>
+         <width>1331</width>
+         <height>731</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QHeaderView::section {
-    color: rgb(170, 0, 127)
+        <string notr="true">QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical {
+    height: 0px;
+    border: none;
+    background: transparent;
+}
+
+QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:vertical {
+    width: 0px;
+    height: 0px;
+    background: transparent;
 }</string>
        </property>
-       <attribute name="verticalHeaderCascadingSectionResizes">
-        <bool>false</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>ID</string>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QTableWidget" name="tblProducto">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Descripción</string>
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>230</y>
+          <width>1275</width>
+          <height>481</height>
+         </rect>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Precio</string>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Estado</string>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Descripción</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Precio</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Estado</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Stock</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Peso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Ingreso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Subfamilia</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Familia</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Línea</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QLineEdit" name="txtBuscarProducto">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>140</y>
+          <width>231</width>
+          <height>41</height>
+         </rect>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Stock</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Peso</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Ingreso</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Subfamilia</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Familia</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Línea</string>
-        </property>
-       </column>
+       </widget>
       </widget>
-      <widget class="QLineEdit" name="txtBuscarProducto">
+      <widget class="QFrame" name="frame_details">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>60</y>
-         <width>231</width>
-         <height>41</height>
+         <x>460</x>
+         <y>70</y>
+         <width>120</width>
+         <height>80</height>
         </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
       </widget>
      </widget>
