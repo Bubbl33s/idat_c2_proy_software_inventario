@@ -31,37 +31,43 @@
   </property>
   <property name="styleSheet">
    <string notr="true">*{
-font-family: century-ghotic;
+	font-family: century-ghotic;
 }
 
 QWidget#background{
-background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(20, 20, 20), stop:1 rgb(80, 80, 80));
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(20, 20, 20), stop:1 rgb(80, 80, 80));
 }
 
 QFrame#frame_main{
-background-color: rgb(20, 20, 20);
-border-radius: 15px;
+	background-color: rgb(20, 20, 20);
+	border-radius: 15px;
+}
+
+QFrame#edit_stock_frame {
+	background-color: rgb(120, 120, 120);
+	border-radius: 8px;
 }
 
 QLabel{
-color: rgb(230, 230, 230);
+	color: rgb(230, 230, 230);
 }
 
 QLineEdit{
-background: transparent;
-border: none;
-border-bottom: 1px solid white;
-color: white;
-font-size: 14px;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid white;
+	color: white;
+	font-size: 14px;
 }
 
 QPushButton{
-background-color: rgb(152, 152, 152);
-font-weight: bold;
-font-size: 20px;
-border:none;
-border-radius: 8px;
+	background-color: rgb(152, 152, 152);
+	font-weight: bold;
+	font-size: 20px;
+	border:none;
+	border-radius: 8px;
 }
+
 QPushButton:hover {
     background-color: rgb(190, 190, 190);
 }
@@ -71,7 +77,7 @@ QPushButton:pressed {
 }
 
 QMessageBox{
-color: rgb(0, 0, 0);
+	color: rgb(0, 0, 0);
 }
 
 QHeaderView::section {
@@ -83,15 +89,16 @@ QHeaderView::section {
 QTableWidget {
     background-color: transparent;
 	color: rgb(230, 230, 230);
+	gridline-color: #ffffff;
+}
+
+QHeaderView::section {
+	border: 1px solid #ffffff;
 }
 
 QTableWidget::item {
     border-right: 8px solid rgb(20, 20, 20);
 	border-left: 8px solid rgb(20, 20, 20);
-}
-
-QTableWidget QHeaderView::section:vertical {
-    border-right: 15px solid rgb(20, 20, 20);
 }
 
 QTableWidget QHeaderView {
@@ -121,7 +128,43 @@ QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:ve
     height: 0px;
     border: none;
     background: none;
-}</string>
+}
+
+QFrame#edit_stock_frame QLabel {
+	color: black;
+}
+
+QLabel#lbl_id_nombre {
+	font-family: century-ghotic;
+    font-size: 18px;
+	color: black;
+}
+
+QPushButton#btn_apply{
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+	font-weight: bold;
+	font-size: 16px;
+	border:none;
+	border-radius: 5px;
+}
+
+QPushButton#btn_apply:hover {
+    background-color: rgb(50, 50, 50);
+}
+
+QPushButton#btn_apply:pressed {
+    background-color: rgb(150, 150, 150);
+}
+
+QSpinBox {
+	font-size: 18px;
+    background-color: rgb(120, 120, 120);
+    color: #000000;
+    border: none;
+    padding: 5px;
+}
+</string>
   </property>
   <widget class="QWidget" name="background">
    <property name="styleSheet">
@@ -200,10 +243,10 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
         </property>
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>230</y>
-          <width>1275</width>
-          <height>481</height>
+          <x>40</x>
+          <y>190</y>
+          <width>1261</width>
+          <height>521</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -266,29 +309,94 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
        <widget class="QLineEdit" name="txtBuscarProducto">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>140</y>
-          <width>231</width>
+          <x>60</x>
+          <y>90</y>
+          <width>281</width>
           <height>41</height>
          </rect>
         </property>
+        <property name="placeholderText">
+         <string>Buscar...</string>
+        </property>
        </widget>
-      </widget>
-      <widget class="QFrame" name="frame_details">
-       <property name="geometry">
-        <rect>
-         <x>460</x>
-         <y>70</y>
-         <width>120</width>
-         <height>80</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
+       <widget class="QLabel" name="lbl_title">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>321</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:600;&quot;&gt;Inventiva Stock&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="edit_stock_frame">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>90</y>
+          <width>841</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="lbl_id_nombre">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>0</y>
+           <width>531</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;ID12345: NOMBRE PRODUCTO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lbl_stock">
+         <property name="geometry">
+          <rect>
+           <x>550</x>
+           <y>0</y>
+           <width>61</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Stock:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="spx_stock">
+         <property name="geometry">
+          <rect>
+           <x>600</x>
+           <y>20</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="btn_apply">
+         <property name="geometry">
+          <rect>
+           <x>690</x>
+           <y>20</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Aplicar</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </item>

@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import *
 
 from controller.querys import get_products_list, close_connection
 
+# TODO: CORREGIR LA BÚSQUEDA CON ESPACIOS
+
 
 class SoftwareInventario(QMainWindow):
     def __init__(self):
@@ -16,10 +18,11 @@ class SoftwareInventario(QMainWindow):
             self.search_product)
         self.set_product_table()
         self.fill_product_table(self.products_list)
+        self.tblProducto.cellClicked.connect(self.display_product_name)
 
     def set_product_table(self):
         # Ancho de las columnas como se necesita
-        columns_width = [77, 360, 80, 80, 40, 60, 100, 150, 165, 110]
+        columns_width = [77, 360, 80, 70, 50, 60, 100, 140, 165, 110]
 
         for i, width in enumerate(columns_width):
             self.tblProducto.setColumnWidth(i, width)
@@ -75,6 +78,11 @@ class SoftwareInventario(QMainWindow):
 
         # Rellenar tabla con los productos filtrados
         self.fill_product_table(filtered_products)
+
+    def display_product_name(self, row, _):
+        product_id = self.tblProducto.item(row, 0).text()
+        product_name = self.tblProducto.item(row, 1).text()
+        self.lbl_id_nombre.setText(f"{product_id}: {product_name}")
 
 
 if __name__ == '__main__':
