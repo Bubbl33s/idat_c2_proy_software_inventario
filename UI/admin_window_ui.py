@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\STUFF\IDAT\Ciclo II\PROYECTO_FINAL\ui\user_window.ui'
+# Form implementation generated from reading ui file 'd:\STUFF\IDAT\Ciclo II\PROYECTO_FINAL\ui\admin_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -130,12 +130,6 @@ class Ui_MainWindow(object):
 "    color: black;\n"
 "}\n"
 "\n"
-"QLabel#lbl_id_user {\n"
-"    font-family: century-ghotic;\n"
-"    font-size: 18px;\n"
-"    color: white;\n"
-"}\n"
-"\n"
 "QPushButton#btn_apply{\n"
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(0, 0, 0);\n"
@@ -160,11 +154,7 @@ class Ui_MainWindow(object):
 "    border: none;\n"
 "    padding: 5px;\n"
 "}\n"
-"\n"
-"QTableWidget::item:selected {\n"
-"    background-color: #3a3a3a;\n"
-"    color: white;\n"
-"}")
+"")
         self.background = QtWidgets.QWidget(MainWindow)
         self.background.setStyleSheet("")
         self.background.setObjectName("background")
@@ -230,7 +220,7 @@ class Ui_MainWindow(object):
         self.lbl_title.setGeometry(QtCore.QRect(30, 10, 321, 51))
         self.lbl_title.setObjectName("lbl_title")
         self.edit_stock_frame = QtWidgets.QFrame(self.frame_main)
-        self.edit_stock_frame.setGeometry(QtCore.QRect(430, 80, 841, 71))
+        self.edit_stock_frame.setGeometry(QtCore.QRect(400, 90, 841, 71))
         self.edit_stock_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.edit_stock_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.edit_stock_frame.setObjectName("edit_stock_frame")
@@ -242,20 +232,59 @@ class Ui_MainWindow(object):
         self.lbl_stock.setObjectName("lbl_stock")
         self.spx_stock = QtWidgets.QSpinBox(self.edit_stock_frame)
         self.spx_stock.setGeometry(QtCore.QRect(600, 20, 61, 31))
-        self.spx_stock.setMaximum(300)
-        self.spx_stock.setSingleStep(10)
         self.spx_stock.setObjectName("spx_stock")
         self.btn_apply = QtWidgets.QPushButton(self.edit_stock_frame)
         self.btn_apply.setGeometry(QtCore.QRect(690, 20, 121, 31))
         self.btn_apply.setObjectName("btn_apply")
-        self.lbl_id_user = QtWidgets.QLabel(self.frame_main)
-        self.lbl_id_user.setGeometry(QtCore.QRect(590, -10, 651, 91))
-        font = QtGui.QFont()
-        font.setFamily("century-ghotic")
-        font.setPointSize(-1)
-        self.lbl_id_user.setFont(font)
-        self.lbl_id_user.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.lbl_id_user.setObjectName("lbl_id_user")
+        self.tblProducto_2 = QtWidgets.QTableWidget(self.frame_main)
+        self.tblProducto_2.setEnabled(True)
+        self.tblProducto_2.setGeometry(QtCore.QRect(40, 240, 1261, 521))
+        self.tblProducto_2.setStyleSheet("")
+        self.tblProducto_2.setObjectName("tblProducto_2")
+        self.tblProducto_2.setColumnCount(13)
+        self.tblProducto_2.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(8, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(9, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(10, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(11, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblProducto_2.setHorizontalHeaderItem(12, item)
+        self.tblProducto_2.verticalHeader().setCascadingSectionResizes(False)
+        self.pushButton = QtWidgets.QPushButton(self.frame_main)
+        self.pushButton.setGeometry(QtCore.QRect(1162, 0, 161, 28))
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton_2 = QtWidgets.QPushButton(self.frame_main)
+        self.pushButton_2.setGeometry(QtCore.QRect(1030, 0, 121, 28))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_3 = QtWidgets.QPushButton(self.frame_main)
+        self.pushButton_3.setGeometry(QtCore.QRect(490, 20, 93, 28))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_4 = QtWidgets.QPushButton(self.frame_main)
+        self.pushButton_4.setGeometry(QtCore.QRect(600, 20, 93, 28))
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_5 = QtWidgets.QPushButton(self.frame_main)
+        self.pushButton_5.setGeometry(QtCore.QRect(710, 20, 93, 28))
+        self.pushButton_5.setObjectName("pushButton_5")
         self.verticalLayout.addWidget(self.frame_producto)
         MainWindow.setCentralWidget(self.background)
 
@@ -287,7 +316,37 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Línea"))
         self.txtBuscarProducto.setPlaceholderText(_translate("MainWindow", "Buscar..."))
         self.lbl_title.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:28pt; font-weight:600;\">Inventiva Stock</span></p></body></html>"))
-        self.lbl_id_nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">ID1234: NOMBRE PRODUCTO</span></p></body></html>"))
+        self.lbl_id_nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">ID12345: NOMBRE PRODUCTO</span></p></body></html>"))
         self.lbl_stock.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Stock:</span></p></body></html>"))
         self.btn_apply.setText(_translate("MainWindow", "Aplicar"))
-        self.lbl_id_user.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">ID1234: Jimenez Rodriguez Mireya Antonela</span></p></body></html>"))
+        item = self.tblProducto_2.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "ID"))
+        item = self.tblProducto_2.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Contraseña"))
+        item = self.tblProducto_2.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "Apellidos"))
+        item = self.tblProducto_2.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Nombres"))
+        item = self.tblProducto_2.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "Identificación"))
+        item = self.tblProducto_2.horizontalHeaderItem(5)
+        item.setText(_translate("MainWindow", "Dirección"))
+        item = self.tblProducto_2.horizontalHeaderItem(6)
+        item.setText(_translate("MainWindow", "Ubigeo"))
+        item = self.tblProducto_2.horizontalHeaderItem(7)
+        item.setText(_translate("MainWindow", "Teléfono"))
+        item = self.tblProducto_2.horizontalHeaderItem(8)
+        item.setText(_translate("MainWindow", "Correo"))
+        item = self.tblProducto_2.horizontalHeaderItem(9)
+        item.setText(_translate("MainWindow", "Fecha nac."))
+        item = self.tblProducto_2.horizontalHeaderItem(10)
+        item.setText(_translate("MainWindow", "Sexo"))
+        item = self.tblProducto_2.horizontalHeaderItem(11)
+        item.setText(_translate("MainWindow", "Sueldo"))
+        item = self.tblProducto_2.horizontalHeaderItem(12)
+        item.setText(_translate("MainWindow", "Turno"))
+        self.pushButton.setText(_translate("MainWindow", "INVENTARISTA"))
+        self.pushButton_2.setText(_translate("MainWindow", "PRODUCTO"))
+        self.pushButton_3.setText(_translate("MainWindow", "agregar"))
+        self.pushButton_4.setText(_translate("MainWindow", "eliminar"))
+        self.pushButton_5.setText(_translate("MainWindow", "editar"))

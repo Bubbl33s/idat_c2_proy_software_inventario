@@ -19,11 +19,11 @@ cursor = conn.cursor()
 
 
 def get_users_dict():
-    query_users = "SELECT ID_inventarista, Password from TB_INVENTARISTA"
-    cursor.execute(query_users)
+    query_users_dict = "SELECT ID_inventarista, Password, Apellidos, Nombres from TB_INVENTARISTA"
+    cursor.execute(query_users_dict)
 
     # Crea un diccionario con el usuario y contraseña de los inventaristas
-    users_dict = {v.lower(): k for v, k in cursor.fetchall()}
+    users_dict = {val[0]: (val[1], f"{val[2]} {val[3]}") for val in cursor.fetchall()}
 
     return users_dict
 
@@ -60,9 +60,26 @@ def get_products_list():
     return productos
 
 
+def update_stock_for_user(value, product_id):
+    update_query = """
+    UPDATE TB_PRODUCTO
+    SET Stock_producto = ?
+    WHERE ID_producto = ?;
+    """
+
+    try:
+        # Ejecuta el query con los parámetros proporcionados
+        cursor.execute(update_query, value, product_id)
+        conn.commit()
+
+    except pyodbc.Error as e:
+        print(f"Error al actualizar el stock: {e}")
+
+
 def close_connection():
     # CERRAR LA CONEXIÓN
     conn.close()
+    print("Conexión terminada")
 
 
 if __name__ == "__main__":

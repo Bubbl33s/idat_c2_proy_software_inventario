@@ -97,16 +97,9 @@ class UserWindow(QMainWindow):
         self.update_table_content(self.products_list)
         self.search_product()
 
-    def set_user_id_name(self, user_id, user_name):
-        self.lbl_id_user.setText(f"{user_id}: {user_name}")
+    def set_user_label(self, user_id, user_name):
+        self.lbl_id_user.setText(f"Usuario {user_id}: {user_name}")
 
     def closeEvent(self, event):
         close_connection()
         event.accept()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    gui = UserWindow()
-    gui.show()
-    sys.exit(app.exec_())

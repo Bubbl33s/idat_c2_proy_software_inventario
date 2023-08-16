@@ -140,12 +140,6 @@ QLabel#lbl_id_nombre {
 	color: black;
 }
 
-QLabel#lbl_id_user {
-	font-family: century-ghotic;
-    font-size: 18px;
-	color: white;
-}
-
 QPushButton#btn_apply{
 	color: rgb(255, 255, 255);
 	background-color: rgb(0, 0, 0);
@@ -170,11 +164,7 @@ QSpinBox {
     border: none;
     padding: 5px;
 }
-
-QTableWidget::item:selected {
-    background-color: #3a3a3a;
-    color: white;
-}</string>
+</string>
   </property>
   <widget class="QWidget" name="background">
    <property name="styleSheet">
@@ -345,8 +335,8 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
        <widget class="QFrame" name="edit_stock_frame">
         <property name="geometry">
          <rect>
-          <x>430</x>
-          <y>80</y>
+          <x>400</x>
+          <y>90</y>
           <width>841</width>
           <height>71</height>
          </rect>
@@ -367,7 +357,7 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
           </rect>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;ID1234: NOMBRE PRODUCTO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;ID12345: NOMBRE PRODUCTO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
         <widget class="QLabel" name="lbl_stock">
@@ -392,12 +382,6 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
            <height>31</height>
           </rect>
          </property>
-         <property name="maximum">
-          <number>300</number>
-         </property>
-         <property name="singleStep">
-          <number>10</number>
-         </property>
         </widget>
         <widget class="QPushButton" name="btn_apply">
          <property name="geometry">
@@ -413,26 +397,153 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
          </property>
         </widget>
        </widget>
-       <widget class="QLabel" name="lbl_id_user">
+       <widget class="QTableWidget" name="tblProducto_2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>590</x>
-          <y>-10</y>
-          <width>651</width>
-          <height>91</height>
+          <x>40</x>
+          <y>240</y>
+          <width>1261</width>
+          <height>521</height>
          </rect>
         </property>
-        <property name="font">
-         <font>
-          <family>century-ghotic</family>
-          <pointsize>-1</pointsize>
-         </font>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Contraseña</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Apellidos</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nombres</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Identificación</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Dirección</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Ubigeo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Teléfono</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Correo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha nac.</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Sexo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Sueldo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Turno</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>1162</x>
+          <y>0</y>
+          <width>161</width>
+          <height>28</height>
+         </rect>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;ID1234: Jimenez Rodriguez Mireya Antonela&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>INVENTARISTA</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>1030</x>
+          <y>0</y>
+          <width>121</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PRODUCTO</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>20</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>agregar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="geometry">
+         <rect>
+          <x>600</x>
+          <y>20</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>eliminar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>710</x>
+          <y>20</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>editar</string>
         </property>
        </widget>
       </widget>

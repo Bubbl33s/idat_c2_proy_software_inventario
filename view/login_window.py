@@ -1,6 +1,6 @@
 from PyQt5 import uic, QtWidgets
 
-from view.inventarista_window import IventaristaWindow
+from view.user_window import UserWindow
 from controller.querys import get_users_dict
 from view.warning_message_box import setted_message_box
 
@@ -16,13 +16,15 @@ class LoginWindow(QtWidgets.QMainWindow):
         # Diccionario con las cuentas de adminstrador
         self.admins_dict = {'admx99': 'admx99', 'admz88': 'admz88'}
         self.users_dict = get_users_dict()
+        
+        self.user_id = self.user_full_name = ""
 
         self.btn_login.clicked.connect(self.verify_null_inputs)
 
     # Método para verificar que no haya campos vacíos
     def verify_null_inputs(self):
         # Acepta lower debido a que solo son dos letras
-        self.login_user = self.txt_user.text().lower()
+        self.login_user = self.txt_user.text().upper()
         self.login_password = self.txt_password.text()
 
         if self.login_user == "" or self.login_password == "":
@@ -37,8 +39,9 @@ class LoginWindow(QtWidgets.QMainWindow):
 
     # Método para cambiar a la ventana de inventaristas
     def switch_to_inv_window(self):
-        self.window = IventaristaWindow()
-        self.window.show()
+        self.user_window = UserWindow()
+        self.user_window.set_user_label(self.login_user, self.user_full_name)
+        self.user_window.show()
         self.close()
 
     # Verificación de usuario y contraseña
@@ -49,7 +52,8 @@ class LoginWindow(QtWidgets.QMainWindow):
             # CAMBIAR A VENTANA DE ADMIN
             pass
         # Inventarista
-        elif self.users_dict.get(self.login_user) == self.login_password:
+        elif self.users_dict.get(self.login_user)[0] == self.login_password:
+            self.user_full_name = self.users_dict.get(self.login_user)[1]
             self.switch_to_inv_window()
         # Sin coincidencia
         else:
