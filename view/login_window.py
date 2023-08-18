@@ -1,7 +1,7 @@
 from PyQt5 import uic, QtWidgets
 from view.user_window import UserWindow
 from controller.querys import Database
-from view.warning_message_box import setted_message_box
+from view.message_box import setted_message_box
 
 class LoginWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):

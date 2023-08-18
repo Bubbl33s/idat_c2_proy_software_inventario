@@ -73,7 +73,62 @@ class Database:
             self.conn.commit()
         except pyodbc.Error as e:
             print(f"Error al actualizar el stock: {e}")
+# CRUD
+# PRODUCTO -----------------------------------------------------------------------------------------------------------
+    def create_producto(self, data):
+        try:
+            query = '''INSERT INTO TB_PRODUCTO (Descripcion_producto, Precio, Estado_producto, Stock_producto, 
+                    Peso_producto, Fecha_de_ingreso, ID_subfamilia)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)'''
+            
+            self.cursor.execute(query, data)
+            self.conn.commit()
+            return True
 
+        except pyodbc.Error as e:
+            print(f"Error al insertar producto en la base de datos: {e}")
+            return False
+
+    def update_producto(self, data):
+        try:
+            query = '''UPDATE TB_PRODUCTO
+                    SET Descripcion_producto = ?, Precio = ?, Estado_producto = ?, Stock_producto = ?, 
+                        Peso_producto = ?, Fecha_de_ingreso = ?, ID_subfamilia = ?
+                    WHERE ID_producto = ?'''
+
+            # Reordenamos la data para que el ID sea el último en la lista
+            data_reordered = data[1:] + (data[0],)
+            
+            self.cursor.execute(query, data_reordered)
+            self.conn.commit()
+
+            # Verificamos si se hizo alguna actualización
+            if self.cursor.rowcount == 0:
+                print("No se encontró el producto con el ID especificado.")
+                return False
+            return True
+
+        except pyodbc.Error as e:
+            print(f"Error al actualizar producto en la base de datos: {e}")
+            return False
+        
+    def delete_producto(self, producto_id):
+        try:
+            query = '''DELETE FROM TB_PRODUCTO WHERE ID_producto = ?'''
+            
+            self.cursor.execute(query, (producto_id,))
+            self.conn.commit()
+
+            if self.cursor.rowcount == 0:
+                print("No se encontró el producto con el ID especificado.")
+                return False
+            return True
+
+        except pyodbc.Error as e:
+            print(f"Error al eliminar producto de la base de datos: {e}")
+            return False
+
+# INVENTARISTA ---------------------------------------------------------------------------------------------------
     def get_inven_list(self):
         query_inventarista = """
         SELECT 
@@ -116,6 +171,42 @@ class Database:
 
         except pyodbc.Error as e:
             print(f"Error al insertar en la base de datos: {e}")
+            return False
+
+    def update_inventarista(self, data):
+        try:
+            query = '''UPDATE TB_INVENTARISTA
+                    SET Apellidos = ?, Nombres = ?, Direccion = ?, Tipo_Documento = ?, Numero_documento = ?, 
+                        Fecha_de_nacimiento = ?, Sexo = ?, Sueldo = ?, Turno = ?, ID_ubigeo = ?, 
+                        Telefono = ?, Correo = ?, Password = ?
+                    WHERE ID_inventarista = ?'''
+
+            # Reordenamos la data para que el ID sea el último en la lista
+            data_reordered = data[1:] + (data[0],)
+            
+            self.cursor.execute(query, data_reordered)
+            self.conn.commit()
+
+            # Verificamos si se hizo alguna actualización
+            if self.cursor.rowcount == 0:
+                print("No se encontró el inventarista con el ID especificado.")
+                return False
+            return True
+
+        except pyodbc.Error as e:
+            print(f"Error al actualizar en la base de datos: {e}")
+            return False
+
+    def delete_inventarista(self, inventarista_id):
+        try:
+            query = '''DELETE FROM TB_INVENTARISTA WHERE ID_inventarista = ?'''
+            
+            self.cursor.execute(query, (inventarista_id,))
+            self.conn.commit()
+            return True
+
+        except pyodbc.Error as e:
+            print(f"Error al eliminar al inventarista de la base de datos: {e}")
             return False
 
     def close_connection(self):

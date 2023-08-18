@@ -34,12 +34,12 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QFrame#frame_inve{\n"
-"    background-color: rgb(255, 20, 20);\n"
+"    background-color: rgb(0, 0, 0);\n"
 "    border-radius: 15px;\n"
 "}\n"
 "\n"
 "QFrame#frame_prod{\n"
-"    background-color: rgb(20, 255, 20);\n"
+"    background-color: rgb(0, 0, 0);\n"
 "    border-radius: 15px;\n"
 "}\n"
 "\n"
@@ -169,7 +169,31 @@ class Ui_MainWindow(object):
 "\n"
 "QSpinBox {\n"
 "    font-size: 18px;\n"
-"    background-color: rgb(120, 120, 120);\n"
+"    background-color: rgb(200, 200, 200);\n"
+"    color: #000000;\n"
+"    border: none;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QDoubleSpinBox {\n"
+"    font-size: 18px;\n"
+"    background-color: rgb(200, 200, 200);\n"
+"    color: #000000;\n"
+"    border: none;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QDateEdit {\n"
+"    font-size: 12px;\n"
+"    background-color: rgb(200, 200, 200);\n"
+"    color: #000000;\n"
+"    border: none;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QComboBox {\n"
+"    font-size: 12px;\n"
+"    background-color: rgb(200, 200, 200);\n"
 "    color: #000000;\n"
 "    border: none;\n"
 "    padding: 5px;\n"
@@ -334,26 +358,21 @@ class Ui_MainWindow(object):
         self.rb_inven = QtWidgets.QRadioButton(self.frame_main)
         self.rb_inven.setGeometry(QtCore.QRect(80, 80, 191, 41))
         self.rb_inven.setObjectName("rb_inven")
-        self.frame_prod = QtWidgets.QFrame(self.frame_fondo)
-        self.frame_prod.setGeometry(QtCore.QRect(0, 0, 631, 541))
-        self.frame_prod.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_prod.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_prod.setObjectName("frame_prod")
         self.frame_inve = QtWidgets.QFrame(self.frame_fondo)
-        self.frame_inve.setGeometry(QtCore.QRect(650, 10, 591, 521))
+        self.frame_inve.setGeometry(QtCore.QRect(550, 0, 591, 521))
         self.frame_inve.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_inve.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_inve.setObjectName("frame_inve")
-        self.lbl_titulo = QtWidgets.QLabel(self.frame_inve)
-        self.lbl_titulo.setGeometry(QtCore.QRect(40, 30, 501, 21))
+        self.lbl_titulo_inv = QtWidgets.QLabel(self.frame_inve)
+        self.lbl_titulo_inv.setGeometry(QtCore.QRect(40, 30, 501, 21))
         font = QtGui.QFont()
         font.setFamily("century-ghotic")
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.lbl_titulo.setFont(font)
-        self.lbl_titulo.setAlignment(QtCore.Qt.AlignCenter)
-        self.lbl_titulo.setObjectName("lbl_titulo")
+        self.lbl_titulo_inv.setFont(font)
+        self.lbl_titulo_inv.setAlignment(QtCore.Qt.AlignCenter)
+        self.lbl_titulo_inv.setObjectName("lbl_titulo_inv")
         self.txt_id_inv = QtWidgets.QLineEdit(self.frame_inve)
         self.txt_id_inv.setGeometry(QtCore.QRect(40, 90, 211, 20))
         self.txt_id_inv.setObjectName("txt_id_inv")
@@ -397,12 +416,6 @@ class Ui_MainWindow(object):
         self.cbo_sexo.setObjectName("cbo_sexo")
         self.cbo_sexo.addItem("")
         self.cbo_sexo.addItem("")
-        self.spb_sueldo = QtWidgets.QSpinBox(self.frame_inve)
-        self.spb_sueldo.setGeometry(QtCore.QRect(440, 280, 101, 31))
-        self.spb_sueldo.setMinimum(500)
-        self.spb_sueldo.setMaximum(5000)
-        self.spb_sueldo.setSingleStep(100)
-        self.spb_sueldo.setObjectName("spb_sueldo")
         self.cbo_turno = QtWidgets.QComboBox(self.frame_inve)
         self.cbo_turno.setGeometry(QtCore.QRect(440, 330, 101, 31))
         self.cbo_turno.setObjectName("cbo_turno")
@@ -450,6 +463,124 @@ class Ui_MainWindow(object):
         self.btn_canc_inv = QtWidgets.QPushButton(self.frame_inve)
         self.btn_canc_inv.setGeometry(QtCore.QRect(100, 450, 171, 41))
         self.btn_canc_inv.setObjectName("btn_canc_inv")
+        self.spb_sueldo = QtWidgets.QDoubleSpinBox(self.frame_inve)
+        self.spb_sueldo.setGeometry(QtCore.QRect(440, 280, 101, 31))
+        self.spb_sueldo.setMinimum(500.0)
+        self.spb_sueldo.setMaximum(5000.0)
+        self.spb_sueldo.setSingleStep(100.0)
+        self.spb_sueldo.setObjectName("spb_sueldo")
+        self.frame_prod = QtWidgets.QFrame(self.frame_fondo)
+        self.frame_prod.setGeometry(QtCore.QRect(60, 10, 591, 371))
+        self.frame_prod.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_prod.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_prod.setObjectName("frame_prod")
+        self.lbl_titulo_prod = QtWidgets.QLabel(self.frame_prod)
+        self.lbl_titulo_prod.setGeometry(QtCore.QRect(40, 30, 501, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lbl_titulo_prod.setFont(font)
+        self.lbl_titulo_prod.setAlignment(QtCore.Qt.AlignCenter)
+        self.lbl_titulo_prod.setObjectName("lbl_titulo_prod")
+        self.txt_id_prod = QtWidgets.QLineEdit(self.frame_prod)
+        self.txt_id_prod.setGeometry(QtCore.QRect(40, 90, 211, 20))
+        self.txt_id_prod.setObjectName("txt_id_prod")
+        self.txt_desc_prod = QtWidgets.QLineEdit(self.frame_prod)
+        self.txt_desc_prod.setGeometry(QtCore.QRect(40, 140, 211, 20))
+        self.txt_desc_prod.setObjectName("txt_desc_prod")
+        self.date_ing = QtWidgets.QDateEdit(self.frame_prod)
+        self.date_ing.setGeometry(QtCore.QRect(440, 180, 101, 31))
+        self.date_ing.setMaximumDateTime(QtCore.QDateTime(QtCore.QDate(2090, 1, 1), QtCore.QTime(0, 0, 0)))
+        self.date_ing.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(2018, 1, 1), QtCore.QTime(0, 0, 0)))
+        self.date_ing.setObjectName("date_ing")
+        self.cbo_estado_prod = QtWidgets.QComboBox(self.frame_prod)
+        self.cbo_estado_prod.setGeometry(QtCore.QRect(150, 230, 101, 31))
+        self.cbo_estado_prod.setObjectName("cbo_estado_prod")
+        self.cbo_estado_prod.addItem("")
+        self.cbo_estado_prod.addItem("")
+        self.cbo_subfam_prod = QtWidgets.QComboBox(self.frame_prod)
+        self.cbo_subfam_prod.setGeometry(QtCore.QRect(440, 230, 101, 31))
+        self.cbo_subfam_prod.setObjectName("cbo_subfam_prod")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.cbo_subfam_prod.addItem("")
+        self.label_7 = QtWidgets.QLabel(self.frame_prod)
+        self.label_7.setGeometry(QtCore.QRect(330, 190, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(self.frame_prod)
+        self.label_8.setGeometry(QtCore.QRect(40, 240, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_8.setFont(font)
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self.frame_prod)
+        self.label_9.setGeometry(QtCore.QRect(330, 90, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.label_10 = QtWidgets.QLabel(self.frame_prod)
+        self.label_10.setGeometry(QtCore.QRect(40, 190, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.btn_acep_prod = QtWidgets.QPushButton(self.frame_prod)
+        self.btn_acep_prod.setGeometry(QtCore.QRect(320, 300, 171, 41))
+        self.btn_acep_prod.setObjectName("btn_acep_prod")
+        self.btn_canc_prod = QtWidgets.QPushButton(self.frame_prod)
+        self.btn_canc_prod.setGeometry(QtCore.QRect(100, 300, 171, 41))
+        self.btn_canc_prod.setObjectName("btn_canc_prod")
+        self.spb_precio_prod = QtWidgets.QDoubleSpinBox(self.frame_prod)
+        self.spb_precio_prod.setGeometry(QtCore.QRect(150, 180, 101, 31))
+        self.spb_precio_prod.setMinimum(1.0)
+        self.spb_precio_prod.setMaximum(1000.0)
+        self.spb_precio_prod.setSingleStep(10.0)
+        self.spb_precio_prod.setProperty("value", 50.0)
+        self.spb_precio_prod.setObjectName("spb_precio_prod")
+        self.spb_stock = QtWidgets.QSpinBox(self.frame_prod)
+        self.spb_stock.setGeometry(QtCore.QRect(440, 80, 101, 31))
+        self.spb_stock.setMaximum(500)
+        self.spb_stock.setSingleStep(10)
+        self.spb_stock.setProperty("value", 50)
+        self.spb_stock.setObjectName("spb_stock")
+        self.label_11 = QtWidgets.QLabel(self.frame_prod)
+        self.label_11.setGeometry(QtCore.QRect(330, 240, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.spb_peso_prod = QtWidgets.QDoubleSpinBox(self.frame_prod)
+        self.spb_peso_prod.setGeometry(QtCore.QRect(440, 130, 101, 31))
+        self.spb_peso_prod.setMinimum(0.1)
+        self.spb_peso_prod.setMaximum(50.0)
+        self.spb_peso_prod.setSingleStep(0.5)
+        self.spb_peso_prod.setProperty("value", 1.0)
+        self.spb_peso_prod.setObjectName("spb_peso_prod")
+        self.label_12 = QtWidgets.QLabel(self.frame_prod)
+        self.label_12.setGeometry(QtCore.QRect(330, 140, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("century-ghotic")
+        font.setPointSize(11)
+        self.label_12.setFont(font)
+        self.label_12.setObjectName("label_12")
         self.verticalLayout.addWidget(self.frame_fondo)
         MainWindow.setCentralWidget(self.background)
 
@@ -515,7 +646,7 @@ class Ui_MainWindow(object):
         self.btn_delete.setText(_translate("MainWindow", "Eliminar"))
         self.rb_producto.setText(_translate("MainWindow", "Productos"))
         self.rb_inven.setText(_translate("MainWindow", "Inventaristas"))
-        self.lbl_titulo.setText(_translate("MainWindow", "EDITAR USUARIO"))
+        self.lbl_titulo_inv.setText(_translate("MainWindow", "EDITAR USUARIO"))
         self.txt_id_inv.setPlaceholderText(_translate("MainWindow", "ID1234"))
         self.txt_ape_inv.setPlaceholderText(_translate("MainWindow", "Apellidos"))
         self.txt_nom_inv.setPlaceholderText(_translate("MainWindow", "Nombres"))
@@ -528,8 +659,8 @@ class Ui_MainWindow(object):
         self.cbo_doc.setItemText(0, _translate("MainWindow", "DNI"))
         self.cbo_doc.setItemText(1, _translate("MainWindow", "Pasaporte"))
         self.cbo_doc.setItemText(2, _translate("MainWindow", "Carné de Extranjería"))
-        self.cbo_sexo.setItemText(0, _translate("MainWindow", "Maculino"))
-        self.cbo_sexo.setItemText(1, _translate("MainWindow", "Femenino"))
+        self.cbo_sexo.setItemText(0, _translate("MainWindow", "M"))
+        self.cbo_sexo.setItemText(1, _translate("MainWindow", "F"))
         self.cbo_turno.setItemText(0, _translate("MainWindow", "Mañana"))
         self.cbo_turno.setItemText(1, _translate("MainWindow", "Tarde"))
         self.cbo_turno.setItemText(2, _translate("MainWindow", "Noche"))
@@ -540,3 +671,26 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Sueldo</span></p></body></html>"))
         self.btn_acep_inv.setText(_translate("MainWindow", "Aceptar"))
         self.btn_canc_inv.setText(_translate("MainWindow", "Cancelar"))
+        self.lbl_titulo_prod.setText(_translate("MainWindow", "EDITAR PRODUCTO"))
+        self.txt_id_prod.setPlaceholderText(_translate("MainWindow", "ID1234"))
+        self.txt_desc_prod.setPlaceholderText(_translate("MainWindow", "Descripcion"))
+        self.cbo_estado_prod.setItemText(0, _translate("MainWindow", "Activo"))
+        self.cbo_estado_prod.setItemText(1, _translate("MainWindow", "Inactivo"))
+        self.cbo_subfam_prod.setItemText(0, _translate("MainWindow", "COTILLÓN"))
+        self.cbo_subfam_prod.setItemText(1, _translate("MainWindow", "ENTRETENIMIENTO"))
+        self.cbo_subfam_prod.setItemText(2, _translate("MainWindow", "MUÑECAS"))
+        self.cbo_subfam_prod.setItemText(3, _translate("MainWindow", "OTROS JUEGOS"))
+        self.cbo_subfam_prod.setItemText(4, _translate("MainWindow", "PERSONAJES"))
+        self.cbo_subfam_prod.setItemText(5, _translate("MainWindow", "TRANSPORTES"))
+        self.cbo_subfam_prod.setItemText(6, _translate("MainWindow", "ARMABLES"))
+        self.cbo_subfam_prod.setItemText(7, _translate("MainWindow", "DIDÁCTICOS"))
+        self.cbo_subfam_prod.setItemText(8, _translate("MainWindow", "JUEGOS MUSICALES"))
+        self.cbo_subfam_prod.setItemText(9, _translate("MainWindow", "SIN LICENCIA"))
+        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Fecha ingreso</span></p></body></html>"))
+        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Estado</span></p></body></html>"))
+        self.label_9.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Stock</span></p></body></html>"))
+        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Precio</span></p></body></html>"))
+        self.btn_acep_prod.setText(_translate("MainWindow", "Aceptar"))
+        self.btn_canc_prod.setText(_translate("MainWindow", "Cancelar"))
+        self.label_11.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Subfamilia</span></p></body></html>"))
+        self.label_12.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#e6e6e6;\">Peso</span></p></body></html>"))

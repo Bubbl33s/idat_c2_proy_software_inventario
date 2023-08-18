@@ -1,7 +1,9 @@
 import sys
 from PyQt5 import uic
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtCore import Qt, QRect, QDate
 from PyQt5.QtWidgets import *
+
+from view.message_box import setted_message_box, setted_question_box
 
 from controller.querys import Database
 # TODO: LLENAR TABLAS SESIÓN Y DETALLESESION
@@ -16,6 +18,8 @@ class AdminWindow(QMainWindow):
         self.rb_inven.toggled.connect(self.show_inven_table)
         self.rb_producto.toggled.connect(self.show_product_table)
         self.rb_inven.setChecked(True)
+        # TRUE CREATE, FALSE UPDATE
+        self.create_or_update = None
         
         self.set_frames()
         self.set_product_table()
@@ -30,15 +34,38 @@ class AdminWindow(QMainWindow):
         self.tblInventarista.cellClicked.connect(self.display_inve_name)
         
         self.btn_to_login.clicked.connect(self.back_to_login_window)
-        self.btn_edit.clicked.connect(self.update_inv_btn)
-        self.btn_add.clicked.connect(self.create_inv_btn)
         self.btn_canc_inv.clicked.connect(self.hide_frame)
-        self.btn_acep_inv.clicked.connect(self.create_inv_db)
+        self.btn_canc_prod.clicked.connect(self.hide_frame)
+        self.btn_add.clicked.connect(self.add_button_clicked)
+        self.btn_edit.clicked.connect(self.edit_button_clicked)
+        self.btn_delete.clicked.connect(self.delete_button_clicked)
+
         
+# LÓGICA DE BOTONES ---------------------------------------------------------------------
+    def add_button_clicked(self):
+        if self.rb_inven.isChecked():
+            self.create_inv_btn()
+            self.clear_inv_frame_fields()
+        elif self.rb_producto.isChecked():
+            self.create_prod_btn()
+            self.clear_prod_frame_fields()
+
+    def edit_button_clicked(self):
+        if self.rb_inven.isChecked():
+            self.update_inv_btn()
+        elif self.rb_producto.isChecked():
+            self.update_prod_btn()
+
+    def delete_button_clicked(self):
+        if self.rb_inven.isChecked():
+            self.delete_inv_db()
+        elif self.rb_producto.isChecked():
+            self.delete_prod_db()
+            
 # TABLA PRODUCTO ---------------------------------------------------------------------------------------
     def show_product_table(self, isChecked):
         if isChecked:
-            self.lbl_id_nombre.setText("ID12345: NOMBRE")
+            self.lbl_id_nombre.setText("ID1234: NOMBRE")
             self.tblProducto.show()
             self.tblInventarista.hide()
 
@@ -112,7 +139,7 @@ class AdminWindow(QMainWindow):
 # TABLA INVENTARISTA ------------------------------------------------------------------------------------  
     def show_inven_table(self, isChecked):
         if isChecked:
-            self.lbl_id_nombre.setText("ID12345: NOMBRE")
+            self.lbl_id_nombre.setText("ID1234: NOMBRE")
             self.tblInventarista.show()
             self.tblProducto.hide()
     
@@ -208,7 +235,7 @@ class AdminWindow(QMainWindow):
         
         if self.rb_inven.isChecked():
             self.frame_inve.show()
-            self.frame_inve.raise_()     
+            self.frame_inve.raise_()    
         
         elif self.rb_producto.isChecked():
             self.frame_prod.show()
@@ -226,14 +253,157 @@ class AdminWindow(QMainWindow):
         
 # CRUD
 # PRODUCTO ----------------------------------------------------------------------------------------
+    def collect_prod_data(self):
+        # Aquí recolectamos los datos de los widgets
+        estado = 1 if self.cbo_estado_prod.currentText() == 'Activo' else 0
+        
+        # Obtener el ID de subfamilia a partir del nombre seleccionado en el combobox
+        subfamilia_name = self.cbo_subfam_prod.currentText()
+        subfamilia_id = self.get_subfamilia_id(subfamilia_name)  # Definiremos este método más adelante
+
+        data = (
+            self.txt_desc_prod.text(),
+            self.spb_precio_prod.value(),
+            estado,
+            self.spb_stock.value(),
+            self.spb_peso_prod.value(),
+            self.date_ing.date().toString("yyyy-MM-dd"),  # asumiendo formato de fecha yyyy-MM-dd
+            subfamilia_id
+        )
+        return data
+
+    def fill_prod_frame_fields(self):
+        current_row = self.tblProducto.currentRow()
+
+        # Obtenemos los datos de la fila seleccionada
+        data = []
+        for column in range(self.tblProducto.columnCount()):
+            item = self.tblProducto.item(current_row, column)
+            data.append(item.text() if item else "")
+
+        self.txt_id_prod.setText(data[0])
+        self.txt_desc_prod.setText(data[1])
+        self.spb_precio_prod.setValue(float(data[2]))
+        self.cbo_estado_prod.setCurrentText(data[3])
+        self.spb_stock.setValue(int(data[4]))
+        self.spb_peso_prod.setValue(float(data[5]))
+        self.date_ing.setDate(QDate.fromString(data[6], "yyyy-MM-dd"))
+        self.cbo_subfam_prod.setCurrentText(data[7])  # Asumiendo que el combobox tiene todos los valores
+
+    def clear_prod_frame_fields(self):
+        # Limpiar los LineEdits y SpinBoxes
+        line_edits = [self.txt_id_prod, self.txt_desc_prod]
+        spin_boxes = [self.spb_precio_prod, self.spb_stock, self.spb_peso_prod]
+
+        for line_edit in line_edits:
+            line_edit.clear()
+
+        for spin_box in spin_boxes:
+            spin_box.clear()
+
+        self.cbo_estado_prod.setCurrentIndex(0)
+        self.cbo_subfam_prod.setCurrentIndex(0)
+
+        # Resetear DateEdit
+        self.date_ing.setDate(QDate.currentDate())
+
+
+    def create_prod_db(self):
+        data = self.collect_prod_data()
+        success = self.db.create_producto(data)
+
+        if success:
+            title = "Éxito"
+            text = "Producto agregado con éxito."
+            setted_message_box(self, title, text)
+            self.clear_prod_frame_fields()
+            self.update_product_table_content(self.db.get_products_list())
+            self.lbl_id_nombre.setText("ID1234: NOMBRE")
+            self.hide_frame()
+        else:
+            title = "Error"
+            text = "Hubo un error al agregar el producto. Inténtalo de nuevo."
+            setted_message_box(self, title, text)
+
+    def update_prod_db(self):
+        data = self.collect_prod_data()
+        success = self.db.update_producto(data)
+
+        if success:
+            title = "Éxito"
+            text = "Producto actualizado con éxito."
+            setted_message_box(self, title, text)
+            self.clear_prod_frame_fields()
+            self.update_product_table_content(self.db.get_products_list())
+            self.hide_frame()
+        else:
+            title = "Error"
+            text = "Hubo un error al actualizar el producto o no se encontró el ID especificado. Inténtalo de nuevo."
+            setted_message_box(self, title, text)
+
+    def delete_prod_db(self):
+        current_row = self.tblProducto.currentRow()
+        
+        if current_row == -1:
+            title = "Selección requerida"
+            text = "Por favor, selecciona un producto para eliminar."
+            setted_message_box(self, title, text)
+            return
+
+        id_item = self.tblProducto.item(current_row, 0).text()
+        producto_id = id_item if id_item else None
+
+        title = "Confirmar eliminación"
+        text = "¿Estás seguro de que quieres eliminar este producto?"
+        response, _, _ = setted_question_box(self, title, text)
+
+        if response == QMessageBox.Yes:
+            success = self.db.delete_producto(producto_id)
+
+            if success:
+                title = "Éxito"
+                text = "Producto eliminado con éxito."
+                setted_message_box(self, title, text)
+                self.clear_prod_frame_fields()
+                self.update_product_table_content(self.db.get_products_list())
+                self.lbl_id_nombre.setText("ID1234: NOMBRE")
+                self.hide_frame()
+            else:
+                title = "Error"
+                text = "Hubo un error al eliminar el producto o no se encontró el ID especificado. Inténtalo de nuevo."
+                setted_message_box(self, title, text)
+
+    def create_prod_btn(self):
+        self.create_or_update = True
+        self.btn_acep_prod.clicked.connect(self.create_prod_db)
+        self.lbl_titulo_prod.setText("AGREGAR PRODUCTO")
+        self.txt_id_prod.setReadOnly(False)
+        self.show_frame()
+    
+    def update_prod_btn(self):
+        current_row = self.tblProducto.currentRow()
+        
+        # Verificar si hay una fila seleccionada
+        if current_row == -1:
+            title = "Selección requerida"
+            text = "Por favor, selecciona un producto para actualizar."
+            setted_message_box(self, title, text)
+            return
+
+        self.create_or_update = False
+        self.lbl_titulo_prod.setText("EDITAR PRODUCTO")
+        self.btn_acep_prod.clicked.connect(self.update_prod_db)
+        self.fill_prod_frame_fields()
+        self.txt_id_prod.setReadOnly(True)  # El ID no debe ser editable al actualizar
+        self.show_frame()
 
 # INVENTARISTA ------------------------------------------------------------------------------------
     def collect_inv_data(self):
         # Aquí recolectamos los datos de los widgets
         data = (
-            self.txt_id_inv.text(),
-            self.txt_ape_inv.text(),
-            self.txt_nom_inv.text(),
+            self.txt_id_inv.text().upper(),
+            self.txt_ape_inv.text().title(),
+            self.txt_nom_inv.text().title(),
             self.txt_dir_inv.text(),
             1 if self.cbo_doc.currentText() == "DNI" else 2,
             self.txt_doc_inv.text(),
@@ -247,26 +417,134 @@ class AdminWindow(QMainWindow):
             self.txt_pass_inv.text()
         )
         return data
+    
+    def fill_inv_frame_fields(self):
+        current_row = self.tblInventarista.currentRow()
+
+        # Obtenemos los datos de la fila seleccionada
+        data = []
+        for column in range(self.tblInventarista.columnCount()):
+            item = self.tblInventarista.item(current_row, column)
+            data.append(item.text() if item else "")
+
+        self.txt_id_inv.setText(data[0])
+        self.txt_ape_inv.setText(data[2])
+        self.txt_nom_inv.setText(data[3])
+        self.txt_dir_inv.setText(data[6])
+        self.cbo_doc.setCurrentIndex(self.cbo_doc.findText(data[4]))
+        self.txt_doc_inv.setText(data[5])
+        self.date_nac.setDate(QDate.fromString(data[10], "yyyy-MM-dd"))
+        self.cbo_sexo.setCurrentIndex(self.cbo_sexo.findText(data[11]))
+        self.spb_sueldo.setValue(float(data[12]))
+        self.cbo_turno.setCurrentIndex(self.cbo_turno.findText(data[13]))
+        self.txt_ubi_inv.setText(data[7])
+        self.txt_tel_inv.setText(data[8])
+        self.txt_mail_inv.setText(data[9])
+        self.txt_pass_inv.setText(data[1])
+    
+    def clear_inv_frame_fields(self):
+        line_edits = [self.txt_id_inv, self.txt_ape_inv, self.txt_nom_inv,
+                      self.txt_dir_inv, self.txt_doc_inv, self.txt_ubi_inv,
+                      self.txt_tel_inv, self.txt_mail_inv, self.txt_pass_inv]
+        
+        for line_edit in line_edits:
+            line_edit.clear()
+
+        self.cbo_doc.setCurrentIndex(0)
+        self.cbo_sexo.setCurrentIndex(0)
+        self.cbo_turno.setCurrentIndex(0)
+        self.spb_sueldo.setValue(1000.00)
+        self.date_nac.setDate(QDate(2000, 1, 1))
 
     def create_inv_db(self):
         data = self.collect_inv_data()
-        success = self.db.create_inventarista(data)  # Asume que tienes una instancia de Database en self.database
+        success = self.db.create_inventarista(data)
 
         if success:
-            # TODO: STYLESHEET QMESSAGEBOX, CLEAR DATA FIELDS
-            QMessageBox.information(self, "Éxito", "Inventarista agregado con éxito.")
-            # Suponiendo que tu frame se llama frame_main, lo ocultamos
+            title = "Éxito"
+            text = "Inventarista agregado con éxito."
+            setted_message_box(self, title, text)
+            self.clear_inv_frame_fields()
+            self.update_inve_table_content(self.db.get_inven_list())
+            self.lbl_id_nombre.setText("ID1234: NOMBRE")
             self.hide_frame()
         else:
-            QMessageBox.warning(self, "Error", "Hubo un error al agregar el inventarista. Inténtalo de nuevo.")
-            
+            title = "Error"
+            text = "Hubo un error al agregar el inventarista. Inténtalo de nuevo."
+            setted_message_box(self, title, text)
+
+    def update_inv_db(self):
+        data = self.collect_inv_data()
+        success = self.db.update_inventarista(data)
+
+        if success:
+            title = "Éxito"
+            text = "Inventarista actualizado con éxito."
+            setted_message_box(self, title, text)
+            self.clear_inv_frame_fields()
+            self.update_inve_table_content(self.db.get_inven_list())
+            self.hide_frame()
+        else:
+            title = "Error"
+            text = ("Hubo un error al actualizar el inventarista o "
+                    "no se encontró el ID especificado. Inténtalo de nuevo.")
+            setted_message_box(self, title, text)
+
+    def delete_inv_db(self):
+        current_row = self.tblInventarista.currentRow()
+        
+        if current_row == -1:
+            title = "Selección requerida"
+            text = "Por favor, selecciona un inventarista para eliminar."
+            setted_message_box(self, title, text)
+            return
+
+        id_item = self.tblInventarista.item(current_row, 0).text()
+        inventarista_id = id_item if id_item else None
+
+        # Ahora sí, pedimos confirmación al usuario
+        title = "Confirmar eliminación"
+        text = "¿Estás seguro de que quieres eliminar este inventarista?"
+        response, _, _ = setted_question_box(self, title, text)
+
+        if response == QMessageBox.Yes:
+            success = self.db.delete_inventarista(inventarista_id)
+
+            if success:
+                title = "Éxito"
+                text = "Inventarista eliminado con éxito."
+                setted_message_box(self, title, text)
+                self.clear_inv_frame_fields()
+                self.update_inve_table_content(self.db.get_inven_list())
+                self.lbl_id_nombre.setText("ID1234: NOMBRE")
+                self.hide_frame()
+            else:
+                title = "Error"
+                text = ("Hubo un error al eliminar el inventarista o "
+                        "no se encontró el ID especificado. Inténtalo de nuevo.")
+                setted_message_box(self, title, text)
+
     def create_inv_btn(self):
-        self.lbl_titulo.setText("AGREGAR USUARIO")
+        self.create_or_update = True
+        self.btn_acep_inv.clicked.connect(self.create_inv_db)
+        self.lbl_titulo_inv.setText("AGREGAR USUARIO")
         self.txt_id_inv.setReadOnly(False)
         self.show_frame()
         
     def update_inv_btn(self):
-        self.lbl_titulo.setText("EDITAR USUARIO")
+        current_row = self.tblInventarista.currentRow()
+        
+        # Verificar si hay una fila seleccionada
+        if current_row == -1:
+            title = "Selección requerida"
+            text = "Por favor, selecciona un inventarista para actualizar."
+            setted_message_box(self, title, text)
+            return
+        
+        self.create_or_update = False
+        self.lbl_titulo_inv.setText("EDITAR USUARIO")
+        self.btn_acep_inv.clicked.connect(self.update_inv_db)
+        self.fill_inv_frame_fields()
         self.txt_id_inv.setReadOnly(True)
         self.show_frame()
         

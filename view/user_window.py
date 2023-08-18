@@ -93,8 +93,8 @@ class UserWindow(QMainWindow):
 
     def update_stock(self):
         product_id = self.lbl_id_nombre.text()[:6]
-        db.update_stock_for_user(self.spx_stock.value(), product_id)
-        self.products_list = db.get_products_list()
+        self.db.update_stock_for_user(self.spx_stock.value(), product_id)
+        self.products_list = self.db.get_products_list()
 
         self.update_table_content(self.products_list)
         self.search_product()
