@@ -7,7 +7,7 @@ from controller.querys import get_products_list, close_connection, update_stock_
 
 
 # TODO: CORREGIR LA BÚSQUEDA CON ESPACIOS
-class UserWindow(QMainWindow):
+class AdminWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui/user_window.ui', self)
@@ -16,7 +16,7 @@ class UserWindow(QMainWindow):
         self.set_product_table()
         self.products_list = get_products_list()
         self.fill_product_table(self.products_list)
-        self.txtBuscarProducto.textChanged.connect(
+        self.txtBuscar.textChanged.connect(
             self.search_product)
         self.tblProducto.cellClicked.connect(self.display_product_name)
         self.btn_apply.clicked.connect(self.update_stock)
@@ -50,10 +50,10 @@ class UserWindow(QMainWindow):
                     row_position, i, QTableWidgetItem(str(value)))
 
             # Llama a set cells para la corrección de las celdas
-            self.set_cells()
+            self.set_product_cells()
 
     # Settea las celdas de la tabla
-    def set_cells(self):
+    def set_product_cells(self):
         # Bloquear edición de campos
         for row in range(self.tblProducto.rowCount()):
             for column in range(self.tblProducto.columnCount()):
@@ -70,13 +70,13 @@ class UserWindow(QMainWindow):
 
     # La lógica de la búsqueda de productos
     def search_product(self):
-        search = self.txtBuscarProducto.text().lower().replace(" ", "")
+        search = self.txtBuscar.text().lower().replace(" ", "")
         filtered_products = [prod for prod in self.products_list if search in prod[0].lower()
                              .replace(" ", "") or search in prod[1].lower().replace(" ", "")]
 
-        self.update_table_content(filtered_products)
+        self.update_product_table_content(filtered_products)
 
-    def update_table_content(self, updated_list):
+    def update_product_table_content(self, updated_list):
         # Limpiar tabla
         while self.tblProducto.rowCount() > 0:
             self.tblProducto.removeRow(0)
@@ -91,16 +91,15 @@ class UserWindow(QMainWindow):
         self.lbl_id_nombre.setText(f"{product_id}: {product_name}")
         self.spx_stock.setValue(product_stock)
 
+    """
     def update_stock(self):
         product_id = self.lbl_id_nombre.text()[:6]
         update_stock_for_user(self.spx_stock.value(), product_id)
         self.products_list = get_products_list()
 
-        self.update_table_content(self.products_list)
+        self.update_product_table_content(self.products_list)
         self.search_product()
-
-    def set_user_label(self, user_id, user_name):
-        self.lbl_id_user.setText(f"Usuario {user_id}: {user_name}")
+    """
         
     def back_to_login_window(self):
         from view.login_window import LoginWindow

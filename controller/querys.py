@@ -27,7 +27,7 @@ def get_users_dict():
 
     return users_dict
 
-
+# TABLA PRODUCTOS -----------------------------------------------------------------------------------
 # Crea una lista con la tabla de productos de la base de datos
 def get_products_list():
     query_producto = """
@@ -75,6 +75,46 @@ def update_stock_for_user(value, product_id):
     except pyodbc.Error as e:
         print(f"Error al actualizar el stock: {e}")
 
+# TABLA INVENTARISTAS -------------------------------------------------------------------------------
+def get_inven_list():
+    query_inventarista = """
+    SELECT 
+        ID_inventarista,
+        Password,
+        Apellidos,
+        Nombres,
+        CASE
+            WHEN Tipo_Documento = 1 THEN 'DNI'
+            ELSE 'Pasaporte'
+        END AS Tipo_Droducto,
+        Numero_documento,
+        Direccion,
+        ID_ubigeo,
+        Telefono,
+        Correo,
+        Fecha_de_nacimiento,
+        Sexo,
+        Sueldo,
+        CASE
+            WHEN Turno = 'M' THEN 'Mañana'
+            WHEN Turno = 'T' THEN 'Tarde'
+            ELSE 'Noche'
+            END AS Turno
+    FROM TB_INVENTARISTA
+    GO
+    """
+    
+    cursor.execute(query_inventarista)
+    inventaristas = []
+
+    # Llena la lista vacía
+    for row in cursor.fetchall():
+        dato = [r for r in row]
+
+        inventaristas.append(dato)
+
+    return inventaristas
+
 
 def close_connection():
     # CERRAR LA CONEXIÓN
@@ -83,4 +123,4 @@ def close_connection():
 
 
 if __name__ == "__main__":
-    print(get_users_dict())
+    print(get_inven_list())

@@ -1,7 +1,7 @@
 from PyQt5 import uic, QtWidgets
 
 from view.user_window import UserWindow
-from controller.querys import get_users_dict
+from controller.querys import get_users_dict, close_connection
 from view.warning_message_box import setted_message_box
 
 
@@ -73,3 +73,7 @@ class LoginWindow(QtWidgets.QMainWindow):
 
                 if response == QtWidgets.QMessageBox.AcceptRole:
                     self.close()
+    
+        def closeEvent(self, event):
+            close_connection()
+            event.accept()

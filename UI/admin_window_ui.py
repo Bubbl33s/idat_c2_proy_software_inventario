@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QFrame#edit_stock_frame {\n"
-"    background-color: rgb(120, 120, 120);\n"
+"    background-color: rgb(220, 220, 220);\n"
 "    border-radius: 8px;\n"
 "}\n"
 "\n"
@@ -105,17 +105,27 @@ class Ui_MainWindow(object):
 "    width: 15px;\n"
 "}\n"
 "\n"
-"QTableWidget QScrollBar::add-page:vertical, QTableWidget QScrollBar::sub-page:vertical {\n"
+"QTableWidget QScrollBar:horizontal {\n"
+"    border: none;\n"
+"    background: rgb(152, 152, 152);\n"
+"    height: 15px;\n"
+"}\n"
+"\n"
+"QTableWidget QScrollBar::add-page:vertical, QTableWidget QScrollBar::sub-page:vertical,\n"
+"QTableWidget QScrollBar::add-page:horizontal, QTableWidget QScrollBar::sub-page:horizontal {\n"
 "    background: rgb(152, 152, 152);\n"
 "}\n"
-"QTableWidget QScrollBar::handle:vertical {\n"
+"\n"
+"QTableWidget QScrollBar::handle:vertical, QTableWidget QScrollBar::handle:horizontal {\n"
 "    background: rgb(44, 44, 44);\n"
 "    margin: 2px 2.5px;\n"
 "    border-radius: 4px;\n"
 "}\n"
 "\n"
-"QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical {\n"
+"QTableWidget QScrollBar::sub-line:vertical, QTableWidget QScrollBar::add-line:vertical,\n"
+"QTableWidget QScrollBar::sub-line:horizontal, QTableWidget QScrollBar::add-line:horizontal {\n"
 "    height: 0px;\n"
+"    width: 0px;\n"
 "    border: none;\n"
 "    background: none;\n"
 "}\n"
@@ -154,7 +164,35 @@ class Ui_MainWindow(object):
 "    border: none;\n"
 "    padding: 5px;\n"
 "}\n"
-"")
+"\n"
+"QRadioButton {\n"
+"    color: #ffffff;\n"
+"    font-size: 18px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 15px;\n"
+"    height: 15px;\n"
+"    background-color: rgb(100, 100, 100);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    width: 15px;\n"
+"    height: 15px;\n"
+"    border: 4px solid gray;\n"
+"    background-color: white;\n"
+"}\n"
+"\n"
+"QPushButton#btn_delete {\n"
+"    color: white;\n"
+"    background-color: black;\n"
+"    border: 4px solid white;\n"
+"}\n"
+"\n"
+"QPushButton#btn_delete:hover {\n"
+"    color: black;\n"
+"    background-color: white;\n"
+"}")
         self.background = QtWidgets.QWidget(MainWindow)
         self.background.setStyleSheet("")
         self.background.setObjectName("background")
@@ -213,78 +251,79 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tblProducto.setHorizontalHeaderItem(9, item)
         self.tblProducto.verticalHeader().setCascadingSectionResizes(False)
-        self.txtBuscarProducto = QtWidgets.QLineEdit(self.frame_main)
-        self.txtBuscarProducto.setGeometry(QtCore.QRect(60, 90, 281, 41))
-        self.txtBuscarProducto.setObjectName("txtBuscarProducto")
+        self.txtBuscar = QtWidgets.QLineEdit(self.frame_main)
+        self.txtBuscar.setGeometry(QtCore.QRect(310, 100, 281, 41))
+        self.txtBuscar.setObjectName("txtBuscar")
         self.lbl_title = QtWidgets.QLabel(self.frame_main)
-        self.lbl_title.setGeometry(QtCore.QRect(30, 10, 321, 51))
+        self.lbl_title.setGeometry(QtCore.QRect(30, 10, 441, 51))
         self.lbl_title.setObjectName("lbl_title")
         self.edit_stock_frame = QtWidgets.QFrame(self.frame_main)
-        self.edit_stock_frame.setGeometry(QtCore.QRect(400, 90, 841, 71))
+        self.edit_stock_frame.setGeometry(QtCore.QRect(690, 90, 551, 71))
         self.edit_stock_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.edit_stock_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.edit_stock_frame.setObjectName("edit_stock_frame")
         self.lbl_id_nombre = QtWidgets.QLabel(self.edit_stock_frame)
-        self.lbl_id_nombre.setGeometry(QtCore.QRect(20, 0, 531, 71))
+        self.lbl_id_nombre.setGeometry(QtCore.QRect(20, 0, 511, 71))
         self.lbl_id_nombre.setObjectName("lbl_id_nombre")
-        self.lbl_stock = QtWidgets.QLabel(self.edit_stock_frame)
-        self.lbl_stock.setGeometry(QtCore.QRect(550, 0, 61, 71))
-        self.lbl_stock.setObjectName("lbl_stock")
-        self.spx_stock = QtWidgets.QSpinBox(self.edit_stock_frame)
-        self.spx_stock.setGeometry(QtCore.QRect(600, 20, 61, 31))
-        self.spx_stock.setObjectName("spx_stock")
-        self.btn_apply = QtWidgets.QPushButton(self.edit_stock_frame)
-        self.btn_apply.setGeometry(QtCore.QRect(690, 20, 121, 31))
-        self.btn_apply.setObjectName("btn_apply")
-        self.tblProducto_2 = QtWidgets.QTableWidget(self.frame_main)
-        self.tblProducto_2.setEnabled(True)
-        self.tblProducto_2.setGeometry(QtCore.QRect(40, 240, 1261, 521))
-        self.tblProducto_2.setStyleSheet("")
-        self.tblProducto_2.setObjectName("tblProducto_2")
-        self.tblProducto_2.setColumnCount(13)
-        self.tblProducto_2.setRowCount(0)
+        self.tblInventarista = QtWidgets.QTableWidget(self.frame_main)
+        self.tblInventarista.setEnabled(True)
+        self.tblInventarista.setGeometry(QtCore.QRect(40, 190, 1261, 521))
+        self.tblInventarista.setStyleSheet("")
+        self.tblInventarista.setObjectName("tblInventarista")
+        self.tblInventarista.setColumnCount(14)
+        self.tblInventarista.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(0, item)
+        self.tblInventarista.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(1, item)
+        self.tblInventarista.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(2, item)
+        self.tblInventarista.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(3, item)
+        self.tblInventarista.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(4, item)
+        self.tblInventarista.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(5, item)
+        self.tblInventarista.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(6, item)
+        self.tblInventarista.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(7, item)
+        self.tblInventarista.setHorizontalHeaderItem(7, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(8, item)
+        self.tblInventarista.setHorizontalHeaderItem(8, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(9, item)
+        self.tblInventarista.setHorizontalHeaderItem(9, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(10, item)
+        self.tblInventarista.setHorizontalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(11, item)
+        self.tblInventarista.setHorizontalHeaderItem(11, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tblProducto_2.setHorizontalHeaderItem(12, item)
-        self.tblProducto_2.verticalHeader().setCascadingSectionResizes(False)
-        self.pushButton = QtWidgets.QPushButton(self.frame_main)
-        self.pushButton.setGeometry(QtCore.QRect(1162, 0, 161, 28))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.frame_main)
-        self.pushButton_2.setGeometry(QtCore.QRect(1030, 0, 121, 28))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.frame_main)
-        self.pushButton_3.setGeometry(QtCore.QRect(490, 20, 93, 28))
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_4 = QtWidgets.QPushButton(self.frame_main)
-        self.pushButton_4.setGeometry(QtCore.QRect(600, 20, 93, 28))
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_5 = QtWidgets.QPushButton(self.frame_main)
-        self.pushButton_5.setGeometry(QtCore.QRect(710, 20, 93, 28))
-        self.pushButton_5.setObjectName("pushButton_5")
+        self.tblInventarista.setHorizontalHeaderItem(12, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblInventarista.setHorizontalHeaderItem(13, item)
+        self.tblInventarista.verticalHeader().setCascadingSectionResizes(False)
+        self.btn_to_login = QtWidgets.QPushButton(self.frame_main)
+        self.btn_to_login.setGeometry(QtCore.QRect(1280, 0, 50, 50))
+        self.btn_to_login.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("d:\\STUFF\\IDAT\\Ciclo II\\PROYECTO_FINAL\\ui\\../assets/exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_to_login.setIcon(icon1)
+        self.btn_to_login.setIconSize(QtCore.QSize(30, 30))
+        self.btn_to_login.setObjectName("btn_to_login")
+        self.btn_edit = QtWidgets.QPushButton(self.frame_main)
+        self.btn_edit.setGeometry(QtCore.QRect(690, 30, 141, 41))
+        self.btn_edit.setObjectName("btn_edit")
+        self.btn_add = QtWidgets.QPushButton(self.frame_main)
+        self.btn_add.setGeometry(QtCore.QRect(850, 30, 141, 41))
+        self.btn_add.setObjectName("btn_add")
+        self.btn_delete = QtWidgets.QPushButton(self.frame_main)
+        self.btn_delete.setGeometry(QtCore.QRect(1100, 30, 141, 41))
+        self.btn_delete.setObjectName("btn_delete")
+        self.rb_producto = QtWidgets.QRadioButton(self.frame_main)
+        self.rb_producto.setGeometry(QtCore.QRect(80, 120, 191, 41))
+        self.rb_producto.setObjectName("rb_producto")
+        self.rb_inven = QtWidgets.QRadioButton(self.frame_main)
+        self.rb_inven.setGeometry(QtCore.QRect(80, 80, 191, 41))
+        self.rb_inven.setObjectName("rb_inven")
         self.verticalLayout.addWidget(self.frame_producto)
         MainWindow.setCentralWidget(self.background)
 
@@ -314,39 +353,39 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Familia"))
         item = self.tblProducto.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Línea"))
-        self.txtBuscarProducto.setPlaceholderText(_translate("MainWindow", "Buscar..."))
-        self.lbl_title.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:28pt; font-weight:600;\">Inventiva Stock</span></p></body></html>"))
-        self.lbl_id_nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">ID12345: NOMBRE PRODUCTO</span></p></body></html>"))
-        self.lbl_stock.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Stock:</span></p></body></html>"))
-        self.btn_apply.setText(_translate("MainWindow", "Aplicar"))
-        item = self.tblProducto_2.horizontalHeaderItem(0)
+        self.txtBuscar.setPlaceholderText(_translate("MainWindow", "Buscar..."))
+        self.lbl_title.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:28pt; font-weight:600;\">Inventiva Stock Admin</span></p></body></html>"))
+        self.lbl_id_nombre.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">ID12345: NOMBRE</span></p></body></html>"))
+        item = self.tblInventarista.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "ID"))
-        item = self.tblProducto_2.horizontalHeaderItem(1)
+        item = self.tblInventarista.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Contraseña"))
-        item = self.tblProducto_2.horizontalHeaderItem(2)
+        item = self.tblInventarista.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Apellidos"))
-        item = self.tblProducto_2.horizontalHeaderItem(3)
+        item = self.tblInventarista.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "Nombres"))
-        item = self.tblProducto_2.horizontalHeaderItem(4)
+        item = self.tblInventarista.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "Documento"))
+        item = self.tblInventarista.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "Identificación"))
-        item = self.tblProducto_2.horizontalHeaderItem(5)
+        item = self.tblInventarista.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Dirección"))
-        item = self.tblProducto_2.horizontalHeaderItem(6)
+        item = self.tblInventarista.horizontalHeaderItem(7)
         item.setText(_translate("MainWindow", "Ubigeo"))
-        item = self.tblProducto_2.horizontalHeaderItem(7)
+        item = self.tblInventarista.horizontalHeaderItem(8)
         item.setText(_translate("MainWindow", "Teléfono"))
-        item = self.tblProducto_2.horizontalHeaderItem(8)
+        item = self.tblInventarista.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Correo"))
-        item = self.tblProducto_2.horizontalHeaderItem(9)
+        item = self.tblInventarista.horizontalHeaderItem(10)
         item.setText(_translate("MainWindow", "Fecha nac."))
-        item = self.tblProducto_2.horizontalHeaderItem(10)
+        item = self.tblInventarista.horizontalHeaderItem(11)
         item.setText(_translate("MainWindow", "Sexo"))
-        item = self.tblProducto_2.horizontalHeaderItem(11)
+        item = self.tblInventarista.horizontalHeaderItem(12)
         item.setText(_translate("MainWindow", "Sueldo"))
-        item = self.tblProducto_2.horizontalHeaderItem(12)
+        item = self.tblInventarista.horizontalHeaderItem(13)
         item.setText(_translate("MainWindow", "Turno"))
-        self.pushButton.setText(_translate("MainWindow", "INVENTARISTA"))
-        self.pushButton_2.setText(_translate("MainWindow", "PRODUCTO"))
-        self.pushButton_3.setText(_translate("MainWindow", "agregar"))
-        self.pushButton_4.setText(_translate("MainWindow", "eliminar"))
-        self.pushButton_5.setText(_translate("MainWindow", "editar"))
+        self.btn_edit.setText(_translate("MainWindow", "Editar"))
+        self.btn_add.setText(_translate("MainWindow", "Agregar"))
+        self.btn_delete.setText(_translate("MainWindow", "Eliminar"))
+        self.rb_producto.setText(_translate("MainWindow", "Productos"))
+        self.rb_inven.setText(_translate("MainWindow", "Inventaristas"))
