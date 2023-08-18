@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import uic
+
 from PyQt5.QtWidgets import QApplication
 
 from view.login_window import LoginWindow

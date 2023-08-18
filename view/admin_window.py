@@ -3,8 +3,9 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 
-from controller.querys import get_products_list, close_connection, update_stock_for_user
+from controller.querys import Database
 
+db = Database()
 
 # TODO: CORREGIR LA BÚSQUEDA CON ESPACIOS
 class AdminWindow(QMainWindow):
@@ -14,7 +15,7 @@ class AdminWindow(QMainWindow):
 
         self.close_to_switch = False
         self.set_product_table()
-        self.products_list = get_products_list()
+        self.products_list = db.get_products_list()
         self.fill_product_table(self.products_list)
         self.txtBuscar.textChanged.connect(
             self.search_product)
@@ -110,5 +111,5 @@ class AdminWindow(QMainWindow):
 
     def closeEvent(self, event):
         if not self.close_to_switch:
-            close_connection()
+            db.close_connection()
         event.accept()
