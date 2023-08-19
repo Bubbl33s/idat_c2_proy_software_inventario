@@ -51,8 +51,6 @@ class LoginWindow(QtWidgets.QMainWindow):
         self.hide()
 
     def check_login(self):
-        print(f"Intentando ingresar con: {self.login_user} y {self.login_password}")
-        
         if self.admins_dict.get(self.login_user) == self.login_password:
             self.switch_to_admin_window()
             

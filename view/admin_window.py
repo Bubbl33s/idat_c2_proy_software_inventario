@@ -17,19 +17,27 @@ class AdminWindow(QMainWindow):
         
         self.rb_inven.toggled.connect(self.show_inven_table)
         self.rb_producto.toggled.connect(self.show_product_table)
+        self.rb_sesion.toggled.connect(self.show_sesion_tables)
         self.rb_inven.setChecked(True)
         # TRUE CREATE, FALSE UPDATE
         self.create_or_update = None
+
         
         self.set_frames()
         self.set_product_table()
         self.set_inve_table()
+        self.set_sesion_table()
+        self.set_cambio_table()
         self.products_list = self.db.get_products_list()
         self.inven_list = self.db.get_inven_list()
         self.fill_product_table(self.products_list)
         self.fill_inve_table(self.inven_list)
+        self.fill_sesion_table(self.db.get_sesion_list())
+        self.fill_cambio_table(self.db.get_cambio_list())
         
+        self.txtBuscar.textChanged.connect(self.search_inven)
         self.txtBuscar.textChanged.connect(self.search_product)
+        self.txtBuscar.textChanged.connect(self.search_sesion_and_cambio)
         self.tblProducto.cellClicked.connect(self.display_product_name)
         self.tblInventarista.cellClicked.connect(self.display_inve_name)
         
@@ -65,8 +73,12 @@ class AdminWindow(QMainWindow):
     def show_product_table(self, isChecked):
         if isChecked:
             self.lbl_id_nombre.setText("ID1234: NOMBRE")
+            self.txtBuscar.clear()
+            self.txtBuscar.setFocus()
             self.tblProducto.show()
             self.tblInventarista.hide()
+            self.tblSesion.hide()
+            self.tblCambios.hide()
 
     def set_product_table(self):
         # Ancho de las columnas como se necesita
@@ -135,8 +147,12 @@ class AdminWindow(QMainWindow):
     def show_inven_table(self, isChecked):
         if isChecked:
             self.lbl_id_nombre.setText("ID1234: NOMBRE")
+            self.txtBuscar.clear()
+            self.txtBuscar.setFocus()
             self.tblInventarista.show()
             self.tblProducto.hide()
+            self.tblSesion.hide()
+            self.tblCambios.hide()
     
     def set_inve_table(self):
         # Ancho de las columnas como se necesita
@@ -179,7 +195,7 @@ class AdminWindow(QMainWindow):
                 item = self.tblInventarista.item(row_index, i)
                 item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
     
-    def search_product(self):
+    def search_inven(self):
         search = self.txtBuscar.text().lower().replace(" ", "")
         filtered_inve = [inve for inve in self.inven_list if search in inve[0].lower()
                          or search in inve[2].lower().replace(" ", "") +
@@ -200,7 +216,92 @@ class AdminWindow(QMainWindow):
         inve_name = (self.tblInventarista.item(row, 2).text() + " " +
                      self.tblInventarista.item(row, 3).text())
         self.lbl_id_nombre.setText(f"{inve_id}: {inve_name}")
+
+# TABLAS SESIÓN Y CAMBIOS SESIÓN -------------------------------------------------------------------
+    def show_sesion_tables(self, isChecked):
+        if isChecked:
+            self.lbl_id_nombre.setText("TABLAS DE SOLO LECTURA")
+            self.txtBuscar.clear()
+            self.txtBuscar.setFocus()
+            self.tblInventarista.hide()
+            self.tblProducto.hide()
+            self.tblSesion.show()
+            self.tblCambios.show()
+                
+    def set_sesion_table(self):
+        # Ajusta el ancho de las columnas según tus necesidades
+        columns_width = [80, 80, 70, 100, 80, 80]
+
+        for i, width in enumerate(columns_width):
+            self.tblSesion.setColumnWidth(i, width)
+
+        self.tblSesion.verticalHeader().setFixedWidth(32)
+        self.tblSesion.verticalHeader().setDefaultAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.tblSesion.horizontalHeader().setFixedHeight(40)
+        self.tblSesion.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.tblSesion.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+
+    def fill_sesion_table(self, sesion_list_to_fill):
+        for sesion in sesion_list_to_fill:
+            row_position = self.tblSesion.rowCount()
+            self.tblSesion.insertRow(row_position)
+            
+            for i, value in enumerate(sesion):
+                self.tblSesion.setItem(row_position, i, QTableWidgetItem(str(value)))
+
+    def update_sesion_table_content(self, updated_list):
+        while self.tblSesion.rowCount() > 0:
+            self.tblSesion.removeRow(0)
+
+        self.fill_sesion_table(updated_list)
+
+    def set_cambio_table(self):
+        # Ajusta el ancho de las columnas según tus necesidades
+        columns_width = [110, 67, 80, 340, 75]
+
+        for i, width in enumerate(columns_width):
+            self.tblCambios.setColumnWidth(i, width)
+
+        self.tblCambios.verticalHeader().setFixedWidth(32)
+        self.tblCambios.verticalHeader().setDefaultAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.tblCambios.horizontalHeader().setFixedHeight(40)
+        self.tblCambios.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.tblCambios.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+
+    def fill_cambio_table(self, cambio_list_to_fill):
+        for cambio in cambio_list_to_fill:
+            row_position = self.tblCambios.rowCount()
+            self.tblCambios.insertRow(row_position)
+            
+            for i, value in enumerate(cambio):
+                self.tblCambios.setItem(row_position, i, QTableWidgetItem(str(value)))
         
+        for row in range(self.tblCambios.rowCount()):
+            item = self.tblCambios.item(row, 3)
+            item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+            item.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            
+            item = self.tblCambios.item(row, 4)
+            item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+
+    def update_cambio_table_content(self, updated_list):
+        while self.tblCambios.rowCount() > 0:
+            self.tblCambios.removeRow(0)
+
+        self.fill_cambio_table(updated_list)
+
+    def search_sesion_and_cambio(self):
+        search = self.txtBuscar.text().lower().replace(" ", "")
+
+        filtered_sesiones = [sesion for sesion in self.db.get_sesion_list() if
+                            any(search in str(sesion[i]).lower().replace(" ", "") for i in [0, 1, 2])]
+        filtered_cambios = [cambio for cambio in self.db.get_cambio_list() if
+                            any(search in str(cambio[i]).lower().replace(" ", "") for i in [0, 1, 2, 3])]
+
+        self.update_sesion_table_content(filtered_sesiones)
+        self.update_cambio_table_content(filtered_cambios)
+
 # FRAMES -------------------------------------------------------------------------------------------
     def set_frames(self):
         self.frame_inve.setGeometry((self.width() - self.frame_inve.width()) // 2,

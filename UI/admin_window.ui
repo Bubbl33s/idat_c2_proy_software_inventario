@@ -381,7 +381,7 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
        <widget class="QLineEdit" name="txtBuscar">
         <property name="geometry">
          <rect>
-          <x>310</x>
+          <x>80</x>
           <y>100</y>
           <width>281</width>
           <height>41</height>
@@ -395,7 +395,7 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>10</y>
+          <y>20</y>
           <width>441</width>
           <height>51</height>
          </rect>
@@ -587,9 +587,9 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
        <widget class="QRadioButton" name="rb_producto">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>120</y>
-          <width>191</width>
+          <x>500</x>
+          <y>100</y>
+          <width>141</width>
           <height>41</height>
          </rect>
         </property>
@@ -600,9 +600,9 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
        <widget class="QRadioButton" name="rb_inven">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>80</y>
-          <width>191</width>
+          <x>500</x>
+          <y>60</y>
+          <width>141</width>
           <height>41</height>
          </rect>
         </property>
@@ -610,12 +610,118 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
          <string>Inventaristas</string>
         </property>
        </widget>
+       <widget class="QTableWidget" name="tblSesion">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>190</y>
+          <width>540</width>
+          <height>521</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ID Sesión</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Inventarista</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Pocket</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Inicio</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cierre</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QTableWidget" name="tblCambios">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>190</y>
+          <width>721</width>
+          <height>521</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ID Cambio</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Sesión</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>ID producto</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Descripción producto</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cantidad</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QRadioButton" name="rb_sesion">
+        <property name="geometry">
+         <rect>
+          <x>500</x>
+          <y>140</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sesiones</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QFrame" name="frame_inve">
        <property name="geometry">
         <rect>
-         <x>550</x>
-         <y>0</y>
+         <x>740</x>
+         <y>-10</y>
          <width>591</width>
          <height>521</height>
         </rect>
@@ -1011,8 +1117,8 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
       <widget class="QFrame" name="frame_prod">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>10</y>
+         <x>130</x>
+         <y>0</y>
          <width>591</width>
          <height>371</height>
         </rect>
@@ -1387,6 +1493,9 @@ QTableWidget QScrollBar::up-arrow:vertical, QTableWidget QScrollBar::down-arrow:
         </property>
        </widget>
       </widget>
+      <zorder>frame_inve</zorder>
+      <zorder>frame_prod</zorder>
+      <zorder>frame_main</zorder>
      </widget>
     </item>
    </layout>

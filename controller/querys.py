@@ -212,7 +212,7 @@ class Database:
             print(f"Error al eliminar al inventarista de la base de datos: {e}")
             return False
 
-# TB_SESION --------------------------------------------------------------------------------
+# GENERAR SESION --------------------------------------------------------------------------------
     # Método para obtener el siguiente ID de sesión
     def get_next_session_id(self):
         try:
@@ -265,6 +265,36 @@ class Database:
         except pyodbc.Error as e:
             print(f"Error al insertar cambio en la base de datos: {e}")
             return False
+
+# TABLAS SESIÓN Y CAMBIO -------------------------------------------------------------------------
+    def get_sesion_list(self):
+        sesion_list = []
+        query = "SELECT * FROM TB_SESION ORDER BY CAST(SUBSTRING(ID_sesion, 2, 5) AS INT) DESC"
+        
+        self.cursor.execute(query)
+        
+        for sesion in self.cursor.fetchall():
+            sesion_list.append(sesion)
+        
+        return sesion_list
+    
+    def get_cambio_list(self):
+        cambio_list = []
+
+        query = ("""
+            SELECT CS.ID_cambio, CS.ID_sesion, CS.ID_producto, P.Descripcion_producto, CS.Cantidad_cambiada
+            FROM TB_CAMBIO_SESION CS
+            INNER JOIN TB_PRODUCTO P ON CS.ID_producto = P.ID_producto
+            ORDER BY CAST(CS.ID_cambio AS INT) DESC
+        """)
+
+        self.cursor.execute(query)
+
+        for cambio in self.cursor.fetchall():
+            cambio_list.append(cambio)
+
+        return cambio_list
+
 
     def close_connection(self):
         if hasattr(self, 'conn') and self.conn:
