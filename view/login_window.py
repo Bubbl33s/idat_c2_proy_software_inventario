@@ -1,5 +1,7 @@
 from PyQt5 import uic, QtWidgets
+
 from view.user_window import UserWindow
+from view.admin_window import AdminWindow
 from controller.querys import Database
 from view.message_box import setted_message_box
 
@@ -14,7 +16,7 @@ class LoginWindow(QtWidgets.QMainWindow):
         # Contador de intentos
         self.tries = 0
         # Diccionario con las cuentas de adminstrador
-        self.admins_dict = {'admx99': 'admx99', 'admz88': 'admz88'}
+        self.admins_dict = {'IN0001': '34593301','ADMX99': 'ADMX99', 'ADMX88': 'ADMX88'}
         self.users_dict = self.db.get_users_dict()
         
         self.user_id = self.user_full_name = ""
@@ -39,23 +41,32 @@ class LoginWindow(QtWidgets.QMainWindow):
     def switch_to_inv_window(self):
         self.user_window = UserWindow()
         self.user_window.set_user_label(self.login_user, self.user_full_name)
+        self.user_window.session_id = self.session_id
         self.user_window.show()
-        self.close()
+        self.hide()
+        
+    def switch_to_admin_window(self):
+        self.admin_window = AdminWindow()
+        self.admin_window.show()
+        self.hide()
 
     def check_login(self):
+        print(f"Intentando ingresar con: {self.login_user} y {self.login_password}")
+        
         if self.admins_dict.get(self.login_user) == self.login_password:
-            # TODO
-            # CAMBIAR A VENTANA DE ADMIN
-            pass
+            self.switch_to_admin_window()
+            
         elif self.users_dict.get(self.login_user, (None, None))[0] == self.login_password:
             self.user_full_name = self.users_dict[self.login_user][1]
+            self.session_id = self.db.start_session(self.login_user)  # Aquí llamamos al método para iniciar la sesión y obtener el session_id
             self.switch_to_inv_window()
+            
         else:
             self.tries += 1
             title = "Datos incorrectos"
             text = f"Intentos restantes: {3 - self.tries}" if self.tries < 3 else "Intentos agotados. Inicio de sesión fallido."
             response, custom_button = setted_message_box(self, title, text)
-            if self.tries >= 3 or response == QtWidgets.QMessageBox.AcceptRole:
+            if self.tries >= 3:
                 self.close()
 
     def closeEvent(self, event):

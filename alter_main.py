@@ -40,7 +40,6 @@ class AdminWindow(QMainWindow):
         self.btn_edit.clicked.connect(self.edit_button_clicked)
         self.btn_delete.clicked.connect(self.delete_button_clicked)
 
-        
 # LÓGICA DE BOTONES ---------------------------------------------------------------------
     def add_button_clicked(self):
         if self.rb_inven.isChecked():
@@ -99,7 +98,6 @@ class AdminWindow(QMainWindow):
             # Llama a set cells para la corrección de las celdas
             self.set_product_cells()
 
-    # Settea las celdas de la tabla
     def set_product_cells(self):
         # Bloquear edición de campos
         for row in range(self.tblProducto.rowCount()):
@@ -115,7 +113,6 @@ class AdminWindow(QMainWindow):
                 item = self.tblProducto.item(row_index, i)
                 item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
-    # La lógica de la búsqueda de productos
     def search_product(self):
         search = self.txtBuscar.text().lower().replace(" ", "")
         filtered_products = [prod for prod in self.products_list if search in prod[0].lower()
@@ -124,11 +121,9 @@ class AdminWindow(QMainWindow):
         self.update_product_table_content(filtered_products)
 
     def update_product_table_content(self, updated_list):
-        # Limpiar tabla
         while self.tblProducto.rowCount() > 0:
             self.tblProducto.removeRow(0)
 
-        # Rellenar tabla con los productos filtrados
         self.fill_product_table(updated_list)
 
     def display_product_name(self, row, _):
@@ -164,12 +159,10 @@ class AdminWindow(QMainWindow):
             # Settea la columna de sueldo a dos decimales
             single_list[12] = round(single_list[12], 2)
 
-            # Rellena la tabla en base a las listas de inventaristas
             for i, value in enumerate(single_list):
                 self.tblInventarista.setItem(
                     row_position, i, QTableWidgetItem(str(value)))
 
-            # Llama a set cells para la corrección de las celdas
             self.set_inve_cells()
             
     def set_inve_cells(self):
@@ -179,7 +172,6 @@ class AdminWindow(QMainWindow):
                 item = self.tblInventarista.item(row, column)
                 item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
-        # Columnas para alinear a la izquierda
         collumns_to_align = [5, 7, 8, 10, 12]
 
         for i in collumns_to_align:
@@ -259,7 +251,7 @@ class AdminWindow(QMainWindow):
         
         # Obtener el ID de subfamilia a partir del nombre seleccionado en el combobox
         subfamilia_name = self.cbo_subfam_prod.currentText()
-        subfamilia_id = self.get_subfamilia_id(subfamilia_name)  # Definiremos este método más adelante
+        subfamilia_id = self.get_subfamilia_id(subfamilia_name)
 
         data = (
             self.txt_desc_prod.text(),
@@ -267,7 +259,7 @@ class AdminWindow(QMainWindow):
             estado,
             self.spb_stock.value(),
             self.spb_peso_prod.value(),
-            self.date_ing.date().toString("yyyy-MM-dd"),  # asumiendo formato de fecha yyyy-MM-dd
+            self.date_ing.date().toString("yyyy-MM-dd"),
             subfamilia_id
         )
         return data
@@ -288,7 +280,7 @@ class AdminWindow(QMainWindow):
         self.spb_stock.setValue(int(data[4]))
         self.spb_peso_prod.setValue(float(data[5]))
         self.date_ing.setDate(QDate.fromString(data[6], "yyyy-MM-dd"))
-        self.cbo_subfam_prod.setCurrentText(data[7])  # Asumiendo que el combobox tiene todos los valores
+        self.cbo_subfam_prod.setCurrentText(data[7])
 
     def clear_prod_frame_fields(self):
         # Limpiar los LineEdits y SpinBoxes
@@ -306,7 +298,6 @@ class AdminWindow(QMainWindow):
 
         # Resetear DateEdit
         self.date_ing.setDate(QDate.currentDate())
-
 
     def create_prod_db(self):
         data = self.collect_prod_data()
@@ -377,7 +368,7 @@ class AdminWindow(QMainWindow):
         self.create_or_update = True
         self.btn_acep_prod.clicked.connect(self.create_prod_db)
         self.lbl_titulo_prod.setText("AGREGAR PRODUCTO")
-        self.txt_id_prod.setReadOnly(False)
+        self.txt_id_prod.setReadOnly(True)
         self.show_frame()
     
     def update_prod_btn(self):
@@ -528,7 +519,7 @@ class AdminWindow(QMainWindow):
         self.create_or_update = True
         self.btn_acep_inv.clicked.connect(self.create_inv_db)
         self.lbl_titulo_inv.setText("AGREGAR USUARIO")
-        self.txt_id_inv.setReadOnly(False)
+        self.txt_id_inv.setReadOnly(True)
         self.show_frame()
         
     def update_inv_btn(self):

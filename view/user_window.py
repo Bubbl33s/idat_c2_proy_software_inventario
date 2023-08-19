@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 
 from controller.querys import Database
 
+
 class UserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -93,9 +94,17 @@ class UserWindow(QMainWindow):
 
     def update_stock(self):
         product_id = self.lbl_id_nombre.text()[:6]
-        self.db.update_stock_for_user(self.spx_stock.value(), product_id)
-        self.products_list = self.db.get_products_list()
+        original_stock = int(self.tblProducto.item(self.tblProducto.currentRow(), 4).text())
+        new_stock = self.spx_stock.value()
 
+        self.db.update_stock_for_user(new_stock, product_id)
+        
+        cantidad_cambiada = new_stock - original_stock
+        if cantidad_cambiada != 0:
+            self.db.insert_cambio_sesion(self.session_id, product_id, cantidad_cambiada)
+
+        # Actualizar el listado de productos y realizar una nueva búsqueda
+        self.products_list = self.db.get_products_list()
         self.update_table_content(self.products_list)
         self.search_product()
 
@@ -105,11 +114,13 @@ class UserWindow(QMainWindow):
     def back_to_login_window(self):
         from view.login_window import LoginWindow
         
+        self.db.end_session(self.session_id)
         self.login_window = LoginWindow()
         self.close_to_switch = True
-        self.close()
+        self.hide()
 
     def closeEvent(self, event):
         if not self.close_to_switch:
+            self.db.end_session(self.session_id)
             self.db.close_connection()
         event.accept()
