@@ -249,7 +249,7 @@ class Database:
         self.conn.commit()
 
     def insert_cambio_sesion(self, session_id, product_id, cantidad_cambiada):
-        self.cursor.execute("SELECT MAX(ID_cambio) FROM TB_CAMBIOS_SESION")
+        self.cursor.execute("SELECT MAX(ID_cambio) FROM TB_CAMBIO_SESION")
         last_id = self.cursor.fetchone()[0]
         if last_id:
             new_id = str(int(last_id) + 1).zfill(12)
@@ -257,7 +257,7 @@ class Database:
             new_id = '1'.zfill(12)
 
         try:
-            query = '''INSERT INTO TB_CAMBIOS_SESION (ID_cambio, ID_sesion, ID_producto, Cantidad_cambiada)
+            query = '''INSERT INTO TB_CAMBIO_SESION (ID_cambio, ID_sesion, ID_producto, Cantidad_cambiada)
                     VALUES (?, ?, ?, ?)'''
             self.cursor.execute(query, new_id, session_id, product_id, cantidad_cambiada)
             self.conn.commit()
