@@ -4,9 +4,9 @@ from PyQt5.QtCore import Qt, QRect, QDate
 from PyQt5.QtWidgets import *
 
 from view.message_box import setted_message_box, setted_question_box
-
 from controller.querys import Database
-# TODO: MOSTRAR TABLAS SESIÓN Y DETALLESESION
+
+
 class AdminWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -689,9 +689,3 @@ class AdminWindow(QMainWindow):
         if not self.close_to_switch:
             self.db.close_connection()
         event.accept()
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = AdminWindow()
-    window.show()
-    sys.exit(app.exec_())

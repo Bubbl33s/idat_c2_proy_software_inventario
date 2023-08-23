@@ -60,13 +60,6 @@ def setted_question_box(window, title, text):
     cancel_button.setFixedSize(70, 30)
     cancel_button.clicked.connect(msgBox.reject)
 
-    """
-    # Icono personalizado
-    question_icon = QtGui.QPixmap("assets/question-icon.png")  # Asegúrate de tener este icono
-    scaled_question_icon = question_icon.scaled(
-        42, 42, QtCore.Qt.KeepAspectRatio)
-    msgBox.setIconPixmap(scaled_question_icon)
-    """
     # Aplica el qss
     msgBox.setStyleSheet(qss.read())
     msgBox.show()
