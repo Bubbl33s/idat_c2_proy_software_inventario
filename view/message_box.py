@@ -70,5 +70,10 @@ def setted_question_box(window, title, text):
     # Aplica el qss
     msgBox.setStyleSheet(qss.read())
     msgBox.show()
+    result = msgBox.exec_()
 
-    return msgBox.exec_(), accept_button, cancel_button
+    if msgBox.clickedButton() == accept_button:
+        return QtWidgets.QMessageBox.Yes, accept_button, cancel_button
+    
+    elif msgBox.clickedButton() == cancel_button:
+        return QtWidgets.QMessageBox.No, accept_button, cancel_button

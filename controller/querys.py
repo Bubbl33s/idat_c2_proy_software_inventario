@@ -80,9 +80,9 @@ class Database:
 # PRODUCTO -----------------------------------------------------------------------------------------------------------
     def create_producto(self, data):
         try:
-            query = '''INSERT INTO TB_PRODUCTO (Descripcion_producto, Precio, Estado_producto, Stock_producto, 
+            query = '''INSERT INTO TB_PRODUCTO (ID_producto, Descripcion_producto, Precio, Estado_producto, Stock_producto, 
                     Peso_producto, Fecha_de_ingreso, ID_subfamilia)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)'''
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
             
             self.cursor.execute(query, data)
             self.conn.commit()
@@ -91,6 +91,31 @@ class Database:
         except pyodbc.Error as e:
             print(f"Error al insertar producto en la base de datos: {e}")
             return False
+
+    def get_next_producto_id(self):
+        try:
+            query = "SELECT TOP 1 ID_producto FROM TB_PRODUCTO ORDER BY ID_producto DESC"
+            self.execute(query)
+            last_id = self.cursor.fetchone()[0]
+            last_num = int(last_id[1:])
+            next_num = str(last_num + 1).zfill(5)
+            return "P" + next_num
+        except:
+            return "P0001"
+
+    def get_subfamilia_id_by_name(self, subfamilia_name):
+        try:
+            query = "SELECT ID_subfamilia FROM TB_SUBFAMILIA WHERE Descripcion_subfamilia = ?"
+            self.execute(query, subfamilia_name)
+            result = self.cursor.fetchone()
+            if result:
+                return result[0]
+            else:
+                print(f"No se encontró una subfamilia con el nombre: {subfamilia_name}")
+                return None
+        except pyodbc.Error as e:
+            print(f"Error al buscar ID de subfamilia por nombre: {e}")
+            return None
 
     def update_producto(self, data):
         try:
@@ -105,10 +130,6 @@ class Database:
             self.cursor.execute(query, data_reordered)
             self.conn.commit()
 
-            # Verificamos si se hizo alguna actualización
-            if self.cursor.rowcount == 0:
-                print("No se encontró el producto con el ID especificado.")
-                return False
             return True
 
         except pyodbc.Error as e:
@@ -161,6 +182,17 @@ class Database:
         self.execute(query_inventarista)
         inventaristas = [list(row) for row in self.cursor.fetchall()]
         return inventaristas
+    
+    def get_next_inventarista_id(self):
+        try:
+            query = "SELECT TOP 1 ID_inventarista FROM TB_INVENTARISTA ORDER BY ID_inventarista DESC"
+            self.execute(query)
+            last_id = self.cursor.fetchone()[0]
+            last_num = int(last_id[2:])  # Ahora extraemos el número después de "IN"
+            next_num = str(last_num + 1).zfill(4)  # Esto asume que deseas un padding de 4 ceros.
+            return "IN" + next_num
+        except:
+            return "IN0001"
 
     def create_inventarista(self, data):
         try:

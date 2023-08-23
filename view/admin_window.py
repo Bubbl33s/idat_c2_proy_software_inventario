@@ -352,7 +352,7 @@ class AdminWindow(QMainWindow):
         
         # Obtener el ID de subfamilia a partir del nombre seleccionado en el combobox
         subfamilia_name = self.cbo_subfam_prod.currentText()
-        subfamilia_id = self.get_subfamilia_id(subfamilia_name)
+        subfamilia_id = self.db.get_subfamilia_id_by_name(subfamilia_name)
 
         data = (
             self.txt_desc_prod.text(),
@@ -401,7 +401,10 @@ class AdminWindow(QMainWindow):
         self.date_ing.setDate(QDate.currentDate())
 
     def create_prod_db(self):
-        data = self.collect_prod_data()
+        # Obtiene el siguiente ID de producto
+        new_id = self.db.get_next_producto_id()
+        data = (new_id,) + self.collect_prod_data()
+
         success = self.db.create_producto(data)
 
         if success:
@@ -418,7 +421,10 @@ class AdminWindow(QMainWindow):
             setted_message_box(self, title, text)
 
     def update_prod_db(self):
-        data = self.collect_prod_data()
+        data_collected = self.collect_prod_data()
+        # Añadir el ID al principio de los datos recolectados
+        data = (self.txt_id_prod.text(),) + data_collected
+
         success = self.db.update_producto(data)
 
         if success:
@@ -434,6 +440,7 @@ class AdminWindow(QMainWindow):
             setted_message_box(self, title, text)
 
     def delete_prod_db(self):
+        print("Intentando eliminar producto...")
         current_row = self.tblProducto.currentRow()
         
         if current_row == -1:
@@ -450,6 +457,7 @@ class AdminWindow(QMainWindow):
         response, _, _ = setted_question_box(self, title, text)
 
         if response == QMessageBox.Yes:
+            print("BOTÓN ACEPTAR")
             success = self.db.delete_producto(producto_id)
 
             if success:
@@ -467,6 +475,12 @@ class AdminWindow(QMainWindow):
 
     def create_prod_btn(self):
         self.create_or_update = True
+        
+        try:
+            self.btn_acep_prod.clicked.disconnect()
+        except TypeError:
+            pass
+        
         self.btn_acep_prod.clicked.connect(self.create_prod_db)
         self.lbl_titulo_prod.setText("AGREGAR PRODUCTO")
         self.txt_id_prod.setReadOnly(True)
@@ -483,6 +497,13 @@ class AdminWindow(QMainWindow):
             return
 
         self.create_or_update = False
+        
+        try:
+            self.btn_acep_prod.clicked.disconnect()
+        except TypeError:  # Ignorar si no hay ninguna función conectada al botón
+            pass
+        
+        self.btn_acep_prod.clicked.connect(self.update_prod_db)
         self.lbl_titulo_prod.setText("EDITAR PRODUCTO")
         self.btn_acep_prod.clicked.connect(self.update_prod_db)
         self.fill_prod_frame_fields()
@@ -549,7 +570,11 @@ class AdminWindow(QMainWindow):
         self.date_nac.setDate(QDate(2000, 1, 1))
 
     def create_inv_db(self):
+        # Generar ID automáticamente
+        new_id = self.db.get_next_inventarista_id()
         data = self.collect_inv_data()
+        # Reemplazar el ID que se recogió de los widgets con el nuevo ID generado automáticamente
+        data = (new_id,) + data[1:]
         success = self.db.create_inventarista(data)
 
         if success:
@@ -618,11 +643,17 @@ class AdminWindow(QMainWindow):
 
     def create_inv_btn(self):
         self.create_or_update = True
+        
+        try:
+            self.btn_acep_inv.clicked.disconnect()
+        except TypeError:  # Ignorar si no hay ninguna función conectada al botón
+            pass
+        
         self.btn_acep_inv.clicked.connect(self.create_inv_db)
         self.lbl_titulo_inv.setText("AGREGAR USUARIO")
         self.txt_id_inv.setReadOnly(True)
         self.show_frame()
-        
+
     def update_inv_btn(self):
         current_row = self.tblInventarista.currentRow()
         
@@ -634,8 +665,14 @@ class AdminWindow(QMainWindow):
             return
         
         self.create_or_update = False
-        self.lbl_titulo_inv.setText("EDITAR USUARIO")
+        
+        try:
+            self.btn_acep_inv.clicked.disconnect()
+        except TypeError:  # Ignorar si no hay ninguna función conectada al botón
+            pass
+        
         self.btn_acep_inv.clicked.connect(self.update_inv_db)
+        self.lbl_titulo_inv.setText("EDITAR USUARIO")
         self.fill_inv_frame_fields()
         self.txt_id_inv.setReadOnly(True)
         self.show_frame()
